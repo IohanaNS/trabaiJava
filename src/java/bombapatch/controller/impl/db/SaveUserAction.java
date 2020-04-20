@@ -43,7 +43,7 @@ public class SaveUserAction implements ICommanderAction{
         
         
         new CallViewLoginAction().executar(request, response);
-        new AlteraTimeAction().executar(request, response);
+      //  new AlteraTimeAction().executar(request, response);
     }
     
     
