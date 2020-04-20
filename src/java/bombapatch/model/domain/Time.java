@@ -51,11 +51,10 @@ public class Time implements Serializable {
     @Column(name = "pontuacao_total", precision = 22)
     private Double pontuacaoTotal;
     @OneToMany(mappedBy = "time",cascade = CascadeType.ALL)
-    
     private List<JogadorTime> jogadorTimeList;
-    @OneToOne(cascade = CascadeType.ALL)
     
-    @JoinColumn(unique = true)
+    
+    @OneToOne(mappedBy="time")
     private Usuario usuario;
     
     @ManyToOne

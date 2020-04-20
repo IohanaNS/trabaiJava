@@ -5,7 +5,13 @@
  */
 package teste;
 
+import bombapatch.model.dao.impl.TimeDao;
+import bombapatch.model.dao.impl.UsuarioDao;
+import bombapatch.model.domain.Time;
 import bombapatch.model.domain.Usuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -26,14 +32,22 @@ public class TesteBanco {
 //        System.out.println("COnnectou");
 //        
 //        em.getTransaction().begin();
-//        
-//        em.persist( new Usuario(null,"aaaa","aaaaa","marte",false) );
-//
-//        
-//        em.getTransaction().commit();
-//        
-//        em.close();
-//        emf.close();
+        
+//        Time t = new TimeDao().findByNome("Barcelona");
+//        Usuario u = new Usuario(null,"fnn","aa","mae@marte",false);
+//        u.setTime(t);
+//        try {
+//            new UsuarioDao().inserir(u);
+////        em.persist(u);
+////
+////        
+////        em.getTransaction().commit();
+////        
+////        em.close();
+////        emf.close();
+//        } catch (SQLException ex) {
+//            Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }
     
 }

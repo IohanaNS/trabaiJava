@@ -28,8 +28,8 @@ public class AlteraTimeAction implements ICommanderAction{
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         
-        Time t = new TimeDao().findByNome(request.getParameter("time"));
-        Usuario u = new UsuarioDao().findByLogin(request.getParameter("user"));
+        Time t = new TimeDao().findByNome((String) request.getAttribute("time"));
+        Usuario u = new UsuarioDao().findByLogin((String) request.getAttribute("user"));
         
         t.setUsuario(u);
         

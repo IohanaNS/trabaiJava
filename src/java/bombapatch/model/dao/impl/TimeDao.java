@@ -68,7 +68,7 @@ public class TimeDao extends GenericsDAO<Time,Integer>{
     
     public Time findByNome(String nome){
         
-        Query q = conexao.createNamedQuery("Usuario.findByNome");
+        Query q = conexao.createNamedQuery("Time.findByNome");
 
         try {
             q.setParameter("nome", nome);

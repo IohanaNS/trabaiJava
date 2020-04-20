@@ -31,19 +31,16 @@ public class SaveUserAction implements ICommanderAction{
         
         Usuario u = new Usuario(null,request.getParameter("login"), request.getParameter("senha"), request.getParameter("email"), false);
         
+        
+       Time t = new TimeDao().findByNome(request.getParameter("escolhaTime"));
+      
+       u.setTime(t);
         new UsuarioDao().inserir(u);
-        
-        
-        
-       Time t = new Time();
-       t.setNome(request.getParameter("escolhaTime"));
-        
-        request.setAttribute("time", t.getNome());
-        request.setAttribute("user", u.getLogin());
+
         
         
         new CallViewLoginAction().executar(request, response);
-      //  new AlteraTimeAction().executar(request, response);
+      
     }
     
     

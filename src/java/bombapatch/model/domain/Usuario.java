@@ -8,12 +8,13 @@ package bombapatch.model.domain;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -56,7 +57,8 @@ public class Usuario implements Serializable {
     @Column(length = 45)
     private String email;
     
-    @OneToOne(mappedBy="usuario")
+    @OneToOne
+    @JoinColumn(unique = true)
     private Time time;
     
     @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL)
