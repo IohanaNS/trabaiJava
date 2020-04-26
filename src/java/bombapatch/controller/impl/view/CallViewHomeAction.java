@@ -6,6 +6,9 @@
 package bombapatch.controller.impl.view;
 
 import bombapatch.controller.action.ICommanderAction;
+import bombapatch.model.dao.impl.UsuarioDao;
+import bombapatch.model.domain.Usuario;
+import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +28,10 @@ public class CallViewHomeAction implements ICommanderAction{
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
        
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=campeonato");
+        
+        List<Usuario> users = new UsuarioDao().findLast4(); //TESTE
+        
+        request.setAttribute("users", users);
         
         rd.forward(request, response);
     }

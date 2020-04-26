@@ -6,10 +6,6 @@
 package bombapatch.controller.impl.view;
 
 import bombapatch.controller.action.ICommanderAction;
-import bombapatch.model.dao.impl.TimeDao;
-import bombapatch.model.domain.Time;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,28 +14,17 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author iohan
  */
-public class CallViewCadUser implements ICommanderAction{
+public class CallViewRankingAction implements ICommanderAction {
 
     @Override
     public boolean ehLiberado() {
-        return true;
+        return false;
     }
 
     @Override
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=cadastrar");
         
-        
-        List<Time> times = new TimeDao().buscarTodos(); 
-        ArrayList<Time> lista = new ArrayList<>();
-            
-        for(Time t : times){
-            if(t.getUsuario() == null){
-                lista.add(t);
-            }
-        }
-        
-        request.setAttribute("times", lista);
+        RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=ranking");
         
         rd.forward(request, response);
     }

@@ -74,6 +74,13 @@ public class UsuarioDao extends GenericsDAO<Usuario, Integer> {
 
     }
     
+    public List<Usuario> findLast4() throws SQLException{  //teste
+        
+        Query q = conexao.createQuery("SELECT u from Usuario u ORDER BY u.idUsuario DESC");
+        q.setMaxResults(4);
+        return q.getResultList();
+    }
+    
     public UsuarioLoginDTO buscarPeloLoginaESenha(String login, String senha) throws SQLException {
         
 

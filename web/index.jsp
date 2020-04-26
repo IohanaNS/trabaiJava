@@ -43,7 +43,7 @@
             </div>
             <div class="w3-bar-block">
                 <a href="home?ac=campeonato" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Campeonato</a>  
-                <a href="index.jsp?page=ranking" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ranking</a>
+                <a href="home?ac=ranking" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ranking</a>
                 <c:if test="${sessionScope.user.ehAdmin}">
                 <a href="index.jsp?page=admin" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Área do administrador</a>
                 </c:if>

@@ -5,6 +5,7 @@
  */
 package bombapatch.controller;
 
+import bombapatch.controller.impl.view.CallViewRankingAction;
 import bombapatch.controller.action.ICommanderAction;
 import bombapatch.controller.impl.db.AlteraTimeAction;
 import bombapatch.controller.impl.db.SaveUserAction;
@@ -58,6 +59,7 @@ public class CommanderController extends HttpServlet {
         comandos.put("campeonato", new CallViewHomeAction());
         comandos.put("checkLogin", new CheckLoginAction());
         comandos.put("logout", new LogoutAction());
+        comandos.put("ranking", new CallViewRankingAction());
         
     }
     
