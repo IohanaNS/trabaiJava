@@ -6,6 +6,7 @@
 package bombapatch.model.dao.impl;
 
 import bombapatch.model.dao.GenericsDAO;
+import bombapatch.model.dao.dto.UsuarioLoginDTO;
 import bombapatch.model.domain.Usuario;
 import java.sql.SQLException;
 import java.util.List;
@@ -73,7 +74,7 @@ public class UsuarioDao extends GenericsDAO<Usuario, Integer> {
 
     }
     
-    public Usuario buscarPeloLoginaESenha(String login, String senha) throws SQLException {
+    public UsuarioLoginDTO buscarPeloLoginaESenha(String login, String senha) throws SQLException {
         
 
         Query q = conexao.createNamedQuery("Usuario.findByLoginAndSenha");
@@ -81,7 +82,12 @@ public class UsuarioDao extends GenericsDAO<Usuario, Integer> {
         try {
             q.setParameter("log", login);
             q.setParameter("sen", senha);
-            return (Usuario) q.getSingleResult();
+            
+            Usuario user = (Usuario) q.getSingleResult();
+            UsuarioLoginDTO udto = 
+                    new UsuarioLoginDTO(user.getIdUsuario(), user.getLogin(), user.isEhAdmin());
+            
+            return udto;
         } catch (NoResultException e) {
             return null;
         } catch (NonUniqueResultException ex) {

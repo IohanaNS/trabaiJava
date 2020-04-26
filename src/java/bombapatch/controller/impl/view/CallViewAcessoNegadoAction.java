@@ -6,15 +6,17 @@
 package bombapatch.controller.impl.view;
 
 import bombapatch.controller.action.ICommanderAction;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
  *
- * @author iohan
+ * @author daves
  */
-public class CallViewLoginAction implements ICommanderAction{
+public class CallViewAcessoNegadoAction implements ICommanderAction {
+
+    public CallViewAcessoNegadoAction() {
+    }
 
     @Override
     public boolean ehLiberado() {
@@ -23,15 +25,10 @@ public class CallViewLoginAction implements ICommanderAction{
 
     @Override
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-       if (request.getSession().getAttribute("user") == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            
-            rd.forward(request, response);
-        } else {
-            new CallViewHomeAction().executar(request, response);
-        }
+        request.setAttribute("err", "Acesso não autorizado");
         
-     
+        new CallViewLoginAction().executar(request, response);
+                
     }
-    
+
 }

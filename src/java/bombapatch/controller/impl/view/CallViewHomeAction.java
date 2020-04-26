@@ -14,24 +14,19 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author iohan
  */
-public class CallViewLoginAction implements ICommanderAction{
+public class CallViewHomeAction implements ICommanderAction{
 
     @Override
     public boolean ehLiberado() {
-        return true;
+        return false;
     }
 
     @Override
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-       if (request.getSession().getAttribute("user") == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
-            
-            rd.forward(request, response);
-        } else {
-            new CallViewHomeAction().executar(request, response);
-        }
+       
+        RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=campeonato");
         
-     
+        rd.forward(request, response);
     }
     
 }

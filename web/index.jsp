@@ -20,7 +20,7 @@
         .w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer;padding: 10px;}
         .w3-half img:hover{opacity:1}
         #teste{
-            background-image: url(../img/campo_futebol2.jpg);
+            background-image: url(img/campo_futebol2.jpg);
             background-size: cover;
         }
         .selectProd{
@@ -42,10 +42,12 @@
                 <h3 class="w3-padding-64" id="bombapatch"><b>Bombapatch</h3>
             </div>
             <div class="w3-bar-block">
-                <a href="index.jsp?page=campeonato" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Campeonato</a>  
+                <a href="home?ac=campeonato" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Campeonato</a>  
                 <a href="index.jsp?page=ranking" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ranking</a>
+                <c:if test="${sessionScope.user.ehAdmin}">
                 <a href="index.jsp?page=admin" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Área do administrador</a>
-                <a href="home?ac=login" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sair</a>
+                </c:if>
+                <a href="home?ac=logout" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sair</a>
             </div>
             </c:if>
         </nav>

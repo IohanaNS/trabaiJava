@@ -11,6 +11,7 @@ import bombapatch.model.dao.impl.TimeDao;
 import bombapatch.model.dao.impl.UsuarioDao;
 import bombapatch.model.domain.Time;
 import bombapatch.model.domain.Usuario;
+import bombapatch.util.Crypto;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -30,6 +31,8 @@ public class SaveUserAction implements ICommanderAction{
         
         
         Usuario u = new Usuario(null,request.getParameter("login"), request.getParameter("senha"), request.getParameter("email"), false);
+        
+        u.setSenha( Crypto.md5(u.getSenha()) );
         
         
        Time t = new TimeDao().findByNome(request.getParameter("escolhaTime"));
