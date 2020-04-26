@@ -52,13 +52,13 @@ public class Usuario implements Serializable {
     @Column(nullable = false, length = 15)
     private String login;
     @Basic(optional = false)
-    @Column(nullable = false, length = 15)
+    @Column(nullable = false, length = 45)
     private String senha;
     @Column(length = 45)
     private String email;
     
     @OneToOne
-    @JoinColumn(unique = true)
+    @JoinColumn(unique = true, name="idTime")
     private Time time;
     
     @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL)

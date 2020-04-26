@@ -25,29 +25,29 @@ public class TesteBanco {
     public static void main(String[] args) {
         
        
-//        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Bombapatch2PU");
-//        
-//        EntityManager em = emf.createEntityManager();
-//        
-//        System.out.println("COnnectou");
-//        
-//        em.getTransaction().begin();
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("Bombapatch2PU");
+        
+        EntityManager em = emf.createEntityManager();
+        
+        System.out.println("COnnectou");
+        
+        em.getTransaction().begin();
         
 //        Time t = new TimeDao().findByNome("Barcelona");
-//        Usuario u = new Usuario(null,"fnn","aa","mae@marte",false);
+        Usuario u = new Usuario(null,"vvvcv","aacvc","mae@marte",false);
 //        u.setTime(t);
-//        try {
-//            new UsuarioDao().inserir(u);
+        try {
+            new UsuarioDao().inserir(u);
 ////        em.persist(u);
 ////
 ////        
-////        em.getTransaction().commit();
-////        
-////        em.close();
-////        emf.close();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        em.getTransaction().commit();
+        
+        em.close();
+        emf.close();
+       } catch (SQLException ex) {
+            Logger.getLogger(TesteBanco.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
 }

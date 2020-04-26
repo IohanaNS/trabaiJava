@@ -18,7 +18,7 @@ public class CallViewCadUser implements ICommanderAction{
 
     @Override
     public boolean ehLiberado() {
-        return false;
+        return true;
     }
 
     @Override
