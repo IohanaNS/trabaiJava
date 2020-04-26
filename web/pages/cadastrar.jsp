@@ -3,7 +3,7 @@
     Created on : 12/04/2020, 18:30:23
     Author     : iohan
 --%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <div class="w3-container" id="contact" style="margin-top:75px">
     <h1 class="w3-xxxlarge w3-text-green"><b>Cadastre-se</b></h1>
@@ -12,6 +12,11 @@
     <form action="home" method="post">
         <input type="hidden" name="ac" value="saveUser"/>
         <div class="w3-section">
+            <c:if test="${requestScope.err != null}">
+                <div class="alert alert-danger">
+                    ${requestScope.err}
+                </div>
+            </c:if>
         <label>E-mail</label>
         <input class="w3-input w3-border" type="email" name="email" required>
       </div>
@@ -26,7 +31,11 @@
         <div class="w3-section">
         <label>Escolha o seu time</label>
         <select name="escolhaTime">
-            <option value="Barcelona">Barcelona</option>
+<!--            TESTE-->
+            <c:forEach items="${requestScope.times}" var="p"> 
+            <option value="${p.nome}">${p.nome}</option><BR>
+          </c:forEach>
+<!--            <option value="Barcelona">Barcelona</option>-->
         </select>
       </div>
       <input type="hidden" id="id" name="id" value=""/>

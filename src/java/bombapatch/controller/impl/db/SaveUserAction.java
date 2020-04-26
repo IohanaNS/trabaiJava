@@ -6,6 +6,7 @@
 package bombapatch.controller.impl.db;
 
 import bombapatch.controller.action.ICommanderAction;
+import bombapatch.controller.impl.view.CallViewCadUser;
 import bombapatch.controller.impl.view.CallViewLoginAction;
 import bombapatch.model.dao.impl.TimeDao;
 import bombapatch.model.dao.impl.UsuarioDao;
@@ -36,13 +37,22 @@ public class SaveUserAction implements ICommanderAction{
         
         
        Time t = new TimeDao().findByNome(request.getParameter("escolhaTime"));
-      
-       u.setTime(t);
+       
+       if(t.getUsuario() != null){
+            request.setAttribute("err","Time já escolhido por outro usuário");
+           new CallViewCadUser().executar(request, response);
+          
+       }else{
+            u.setTime(t);
         new UsuarioDao().inserir(u);
+        new CallViewLoginAction().executar(request, response);
+       }
+      
+      
 
         
         
-        new CallViewLoginAction().executar(request, response);
+        
       
     }
     
