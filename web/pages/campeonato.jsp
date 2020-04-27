@@ -11,7 +11,9 @@
     <hr style="width:50px;border:5px green;" class="w3-round">
     <h2 class="w3-xxlarge w3-text-green">Usuários disponíveis para jogar</h2>
 <!--    todo-->
-    <form action="home?ac=ranking" method="post"> 
+    <form action="home" method="post"> 
+        <input type="hidden" name="ac" value="votacaoTimes"/>
+        
       <div class="w3-section">
           <fieldset style="text-align: center;width: 20%; ">
               <tr>
@@ -21,6 +23,7 @@
               </tr>
           </fieldset>
       </div>
+        
       <c:if test="${sessionScope.user.ehAdmin}">
       <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Iniciar</button>
       </c:if>

@@ -6,6 +6,7 @@
 package bombapatch.model.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,10 +30,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Partida.findAll", query = "SELECT p FROM Partida p")
     , @NamedQuery(name = "Partida.findByIdPartida", query = "SELECT p FROM Partida p WHERE p.idPartida = :idPartida")
-    
+
     , @NamedQuery(name = "Partida.findByPlacarTime1", query = "SELECT p FROM Partida p WHERE p.golsdeArtilheiroTime1 = :golsdeArtilheiroTime1")
     , @NamedQuery(name = "Partida.findByPlacarTime2", query = "SELECT p FROM Partida p WHERE p.golsdeArtilheiroTime2 = :golsdeArtilheiroTime2")})
-
 
 public class Partida implements Serializable {
 
@@ -42,13 +42,12 @@ public class Partida implements Serializable {
     @Basic(optional = false)
     @Column(name = "idPartida", nullable = false)
     private Integer idPartida;
-    
+
     @Column(name = "golsdeArtilheiroTime1")
     private int golsdeArtilheiroTime1;
     @Column(name = "golsdeArtilheiroTime2")
     private int golsdeArtilheiroTime2;
-    
-    
+
     @Column(name = "pontuacaoTime1")
     private Integer ptoTime1;
     @Column(name = "pontuacaoTime2")
@@ -94,9 +93,6 @@ public class Partida implements Serializable {
         this.golsdeArtilheiroTime2 = golsdeArtilheiroTime2;
     }
 
- 
-    
-
     public Integer getPontuacaoTime1() {
         return ptoTime1;
     }
@@ -137,6 +133,25 @@ public class Partida implements Serializable {
         this.time2 = time2;
     }
 
+    public ArrayList<Partida> ordenaPartidas(ArrayList<Time> times) {  //TESTE
+
+        ArrayList<Partida> partidas = new ArrayList<>();
+
+        for (int i = 0; i < times.size(); i++) {
+
+            for (int j = i + 1; j < times.size(); j++) {
+                Partida p = new Partida();
+                p.setTime1(times.get(i));
+                p.setTime2(times.get(j));
+                partidas.add(p);
+            }
+
+        }
+        
+        return partidas;
+
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -157,6 +172,4 @@ public class Partida implements Serializable {
         return true;
     }
 
- 
-    
 }

@@ -8,7 +8,9 @@ package bombapatch.controller;
 import bombapatch.controller.impl.view.CallViewRankingAction;
 import bombapatch.controller.action.ICommanderAction;
 import bombapatch.controller.impl.db.AlteraTimeAction;
+import bombapatch.controller.impl.db.CalculaRankingAction;
 import bombapatch.controller.impl.db.SaveUserAction;
+import bombapatch.controller.impl.db.VotacaoTimesAction;
 import bombapatch.controller.impl.session.CheckLoginAction;
 import bombapatch.controller.impl.session.LogoutAction;
 import bombapatch.controller.impl.view.CallViewAcessoNegadoAction;
@@ -60,6 +62,8 @@ public class CommanderController extends HttpServlet {
         comandos.put("checkLogin", new CheckLoginAction());
         comandos.put("logout", new LogoutAction());
         comandos.put("ranking", new CallViewRankingAction());
+        comandos.put("calculaRanking", new CalculaRankingAction()); ///TO DO
+        comandos.put("votacaoTimes", new VotacaoTimesAction()); ///TO DO
         
     }
     
