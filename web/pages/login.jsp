@@ -17,11 +17,11 @@
                     ${requestScope.err}
                 </div>
             </c:if>
-            <label>Login</label>
+                <label class="label">Login</label>
             <input class="w3-input w3-border" type="text" name="login" required>
         </div>
         <div class="w3-section">
-            <label>Senha</label>
+            <label class="label">Senha</label>
             <input class="w3-input w3-border" type="password" name="senha" required>
         </div>
         <input type="hidden" name="ac" value="checkLogin" />

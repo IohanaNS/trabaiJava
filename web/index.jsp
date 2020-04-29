@@ -16,50 +16,18 @@
     <style>
         body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif;
         }
-        body {font-size:16px;
-              overflow-y : scroll !important;
-              overflow-x: scroll !important; 
-        }
-        table {
-            width: 100%;
-            display:block;
-        }
-        thead {
-            display: inline-block;
-            width: 100%;
-            height: 20px;
-        }
-        tbody {
-            color: lightgray;
-            height: 300px;
-            display: inline-block;
-            width: 100%;
-            overflow: auto;
-        }
+        body {font-size:16px;overflow-y : scroll !important;overflow-x: scroll !important;}
+        table {width: 100%;display:block;}
+        thead {display: inline-block;width: 100%;height: 20px;}
+        tbody {color: lightgray;height: 300px;display: inline-block;width: 100%;overflow: auto;}
         .w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer;padding: 10px;}
         .w3-half img:hover{opacity:1}
-        #teste{
-            background-image: url(img/campo_futebol2.jpg);
-            background-size: cover;
-        }
-        .selectProd{
-            margin: 15px 0px 0px 5px;
-            width: 50px;
-        }
-        #bombapatch{
-            font-size: 35px;
-        }
-
-        th{
-             font-size: 30px;
-
-        }
-
-        .inputran{
-            margin: 20px;
-            width: 70px;
-            
-        }
+        #teste{background-image: url(img/campo_futebol2.jpg);background-size: cover;}
+        .selectProd{margin: 15px 0px 0px 5px;width: 50px;}
+        #bombapatch{font-size: 35px;}
+        th{font-size: 30px;}
+        .inputran{margin: 20px;width: 70px;}
+        .label{color:lightgray !important;}
 
     </style>
     <body>

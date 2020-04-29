@@ -17,19 +17,19 @@
                     ${requestScope.err}
                 </div>
             </c:if>
-        <label>E-mail</label>
+        <label class="label">E-mail</label>
         <input class="w3-input w3-border" type="email" name="email" required>
       </div>
       <div class="w3-section">
-        <label>Login</label>
+        <label class="label">Login</label>
         <input class="w3-input w3-border" type="text" name="login" required>
       </div>
       <div class="w3-section">
-        <label>Senha</label>
+        <label class="label">Senha</label>
         <input class="w3-input w3-border" type="password" name="senha" required>
       </div>
         <div class="w3-section">
-        <label>Escolha o seu time</label>
+        <label class="label">Escolha o seu time</label>
         <select name="escolhaTime">
 <!--            TESTE-->
             <c:forEach items="${requestScope.times}" var="p"> 

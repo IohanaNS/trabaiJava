@@ -18,11 +18,7 @@ import bombapatch.controller.impl.view.CallViewCadUser;
 import bombapatch.controller.impl.view.CallViewHomeAction;
 import bombapatch.controller.impl.view.CallViewLoginAction;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -63,7 +59,7 @@ public class CommanderController extends HttpServlet {
         comandos.put("logout", new LogoutAction());
         comandos.put("ranking", new CallViewRankingAction());
         comandos.put("calculaRanking", new CalculaRankingAction()); ///TO DO
-        comandos.put("votacaoTimes", new VotacaoTimesAction()); ///TO DO
+        comandos.put("votacaoTimes", new VotacaoTimesAction()); 
         
     }
     
