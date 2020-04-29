@@ -7,6 +7,7 @@ package bombapatch.model.dao.impl;
 
 import bombapatch.model.dao.GenericsDAO;
 import bombapatch.model.dao.dto.UsuarioLoginDTO;
+import bombapatch.model.domain.Time;
 import bombapatch.model.domain.Usuario;
 import java.sql.SQLException;
 import java.util.List;
@@ -119,6 +120,21 @@ public class UsuarioDao extends GenericsDAO<Usuario, Integer> {
             return null;
         }
         
+    }
+
+    public Usuario findByTeam(Time get) {
+        Query q = conexao.createQuery("SELECT u FROM Usuario u WHERE u.time = :idTime");
+                        
+
+        try {
+            q.setParameter("idTime",get);
+
+            return (Usuario) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException ex) {
+            return null;
+        }
     }
     
     

@@ -6,7 +6,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!-- Contact -->
-<div class="w3-container" id="contact" style="margin-top:75px">
+<div  id="divFundo" class="w3-container" id="contact" style="margin-top:75px">
     <h1 class="w3-xxxlarge w3-text-green"><b>Entrar</b></h1>
     <hr style="width:50px;border:5px green;" class="w3-round">
 

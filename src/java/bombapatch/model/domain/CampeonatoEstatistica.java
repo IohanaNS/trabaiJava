@@ -6,6 +6,7 @@
 package bombapatch.model.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -52,32 +53,38 @@ public class CampeonatoEstatistica implements Serializable {
     @JoinColumn(name = "ganhadorId")
     private Usuario usuario;
 
-    @OneToMany(mappedBy = "campeonatoEstatistica",cascade = ALL)
+    @OneToMany(mappedBy = "campeonatoEstatistica")
     private List<Time> times;
 
     public CampeonatoEstatistica() {
+        this.times = new ArrayList<>();
+        
     }
 
     public List<Time> calculaRanking() {
 
-        List<Time> colocacao = null;
-        double pontuacao = times.get(0).getPontuacaoTotal();
+         boolean troca = true;
+         List<Time> ranking = times;
+         
+            do
+            {
+                troca = false;
+                for (int i = 0; i < ranking.size() - 1; i++)
+                {
+                     
+                    if (ranking.get(i).getPontuacaoTotal() > ranking.get(i+1).getPontuacaoTotal())
+                    {
+                        Time aux = ranking.get(i);
+                        ranking.set(i, ranking.get(i+1));
+                        ranking.set(i+1, aux);
+                        
 
-        boolean teveTroca = true;
-        while (teveTroca == true) {
-            teveTroca = false;
-            for (int i = 0; i < times.size() - 1; i++) {
-
-                if (pontuacao > times.get(i).getPontuacaoTotal()) {
-                    colocacao.add(times.get(i));
-
-                    teveTroca = true;
+                        troca = true;
+                    }
                 }
-            }
+            } while (troca);
 
-        }
-
-        return colocacao;
+        return times;
     }
     
     public CampeonatoEstatistica(Integer idEstatistica) {
@@ -112,8 +119,11 @@ public class CampeonatoEstatistica implements Serializable {
         return times;
     }
 
-    public void setTimes(List<Time> times) {
+    public void setTimes(ArrayList<Time> times) {
         this.times = times;
+    }
+    public void addTime(Time t){
+        this.times.add(t);
     }
     
 

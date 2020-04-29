@@ -6,7 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div class="w3-container" id="contact" style="margin-top:75px">
+<div id="divFundo" class="w3-container" id="contact" style="margin-top:75px">
     <h1 class="w3-xxxlarge w3-text-green"><b>Ranking</b></h1>
     <hr style="width:50px;border:5px green;" class="w3-round">
     <h2 class="w3-xxlarge w3-text-green">Faça a sua votação</h2>
@@ -21,22 +21,23 @@
 
                     <tr>
                         <td>${p.time1.nome}</td>
-                        <td><input class="inputran" type="text" name="placarTime1[]"></td>
-                        <td><input class="inputran" type="text" name="golsArTime1[]"></td>
+                        <input type="hidden" name="nometime1" value="${p.time1.nome}"/>
+                        <td><input class="inputran" type="text" name="placarTime1"></td>
+                        <td><input class="inputran" type="text" name="golsArTime1"></td>
 
                     </tr>
                     <tr>
                         <td>${p.time2.nome}</td>
-                        <td><input class="inputran" type="text" name="placarTime2[]"></td>
-                        <td><input class="inputran" type="text" name="golsArTime2[]"></td>
+                        <input type="hidden" name="nometime2" value="${p.time2.nome}"/>
+                        <td><input class="inputran" type="text" name="placarTime2"></td>
+                        <td><input class="inputran" type="text" name="golsArTime2"></td>
                     </tr>
                     <td>-----------------------</td>
                     
                 </c:forEach>
             </table>
         </div>
-        <input type="hidden" name="ac"/>
-        <input type="hidden" name="ac" />
+ 
         <input type="hidden" name="ac" value="calculaRanking"/>
         <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Enviar</button>
 

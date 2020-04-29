@@ -7,8 +7,12 @@ package bombapatch.controller.impl.db;
 
 import bombapatch.controller.action.ICommanderAction;
 import bombapatch.controller.impl.view.CallViewRankingAction;
+import bombapatch.model.dao.impl.CampeonatoDao;
+import bombapatch.model.dao.impl.CampeonatoEstatisticaDao;
 import bombapatch.model.dao.impl.TimeDao;
 import bombapatch.model.dao.impl.UsuarioDao;
+import bombapatch.model.domain.Campeonato;
+import bombapatch.model.domain.CampeonatoEstatistica;
 import bombapatch.model.domain.Partida;
 import bombapatch.model.domain.Time;
 import bombapatch.model.domain.Usuario;
@@ -34,6 +38,10 @@ public class VotacaoTimesAction implements ICommanderAction{
         List<Usuario> users = new UsuarioDao().findLast4();
         ArrayList<Time> times = new ArrayList<>();
         
+        Campeonato camp = new Campeonato();
+        new CampeonatoDao().inserir(camp);
+        new CampeonatoEstatisticaDao().inserir(new CampeonatoEstatistica());
+        
         for (int i = 0; i < users.size(); i++) {
             times.add(users.get(i).getTime());
         }
@@ -42,7 +50,7 @@ public class VotacaoTimesAction implements ICommanderAction{
          ArrayList<Partida> partidas = p.ordenaPartidas(times);
          
          request.setAttribute("partidas", partidas);
-         
+         request.setAttribute("camp", camp);
          new CallViewRankingAction().executar(request, response);
     }
     

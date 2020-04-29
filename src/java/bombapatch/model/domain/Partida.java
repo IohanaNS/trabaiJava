@@ -151,6 +151,21 @@ public class Partida implements Serializable {
         return partidas;
 
     }
+    
+    public double pontuacaoTotTime1(){
+        //vitoria 3pts , cada gol 1 pto, gol tomado -0.5, golart 5 extra
+        double ptoExtra = 0;
+        if(golsdeArtilheiroTime1 > 0) ptoExtra = 5;
+        
+        return ptoExtra + ptoTime1 - (ptoTime2/2);
+    }
+    public double pontuacaoTotTime2(){
+        //vitoria 3pts , cada gol 1 pto, gol tomado -0.5, golart 5 extra
+        double ptoExtra = 0;
+        if(golsdeArtilheiroTime2 > 0) ptoExtra = 5;
+        
+        return ptoExtra + ptoTime2 - (ptoTime1/2);
+    }
 
     @Override
     public int hashCode() {

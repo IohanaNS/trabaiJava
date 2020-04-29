@@ -15,6 +15,7 @@ import bombapatch.controller.impl.session.CheckLoginAction;
 import bombapatch.controller.impl.session.LogoutAction;
 import bombapatch.controller.impl.view.CallViewAcessoNegadoAction;
 import bombapatch.controller.impl.view.CallViewCadUser;
+import bombapatch.controller.impl.view.CallViewConsultaRankingAction;
 import bombapatch.controller.impl.view.CallViewHomeAction;
 import bombapatch.controller.impl.view.CallViewLoginAction;
 import java.io.IOException;
@@ -60,6 +61,7 @@ public class CommanderController extends HttpServlet {
         comandos.put("ranking", new CallViewRankingAction());
         comandos.put("calculaRanking", new CalculaRankingAction()); ///TO DO
         comandos.put("votacaoTimes", new VotacaoTimesAction()); 
+        comandos.put("consultaRanking", new CallViewConsultaRankingAction()); 
         
     }
     
@@ -87,7 +89,7 @@ public class CommanderController extends HttpServlet {
         } catch (NullPointerException ex) {
             System.out.println(ex.getCause());
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=erro");
-            request.setAttribute("err", "Comando não Encontrado");
+            request.setAttribute("err", "Comando não Encontrado"+ex.getMessage());
             rd.forward(request, response);
         } catch (Exception ex) {
             System.out.println(ex.getCause());

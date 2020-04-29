@@ -19,7 +19,7 @@
         body {font-size:16px;overflow-y : scroll !important;overflow-x: scroll !important;}
         table {width: 100%;display:block;}
         thead {display: inline-block;width: 100%;height: 20px;}
-        tbody {color: lightgray;height: 300px;display: inline-block;width: 100%;overflow: auto;}
+        tbody {color: lightgray;height: 170px;display: inline-block;width: 100%;overflow: auto;}
         .w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer;padding: 10px;}
         .w3-half img:hover{opacity:1}
         #teste{background-image: url(img/campo_futebol2.jpg);background-size: cover;}
@@ -28,7 +28,7 @@
         th{font-size: 30px;}
         .inputran{margin: 20px;width: 70px;}
         .label{color:lightgray !important;}
-
+        #divFundo{background-color: rgba(0, 0, 0, 0.3);}
     </style>
     <body>
 
@@ -41,7 +41,7 @@
                 </div>
                 <div class="w3-bar-block">
                     <a href="home?ac=campeonato" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Campeonato</a>  
-                    <a href="home?ac=ranking" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ranking</a>
+                    <a href="home?ac=consultaRanking" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ranking</a>
                     <c:if test="${sessionScope.user.ehAdmin}">
                         <a href="index.jsp?page=admin" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Área do administrador</a>
                     </c:if>

@@ -6,6 +6,7 @@
 package bombapatch.model.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -67,9 +68,10 @@ public class Time implements Serializable {
     private List<Partida> partidaList1;
     
     @Transient 
-    private List<Partida> partidas;
+    private ArrayList<Partida> partidas;
 
     public Time() {
+        this.partidas = new ArrayList<Partida>();
     }
 
     public Time(Integer idTime) {
@@ -92,7 +94,7 @@ public class Time implements Serializable {
         return partidas;
     }
 
-    public void setPartidas(List<Partida> partidas) {
+    public void setPartidas(ArrayList<Partida> partidas) {
         this.partidas = partidas;
     }
     
@@ -137,16 +139,16 @@ public class Time implements Serializable {
     @XmlTransient
     public List<Partida> getPartidaList() {
         return partidaList;
-    }
+   }
 
     public void setPartidaList(List<Partida> partidaList) {
-        this.partidaList = partidaList;
-    }
+       this.partidaList = partidaList;
+   }
 
     @XmlTransient
-    public List<Partida> getPartidaList1() {
+   public List<Partida> getPartidaList1() {
         return partidaList1;
-    }
+   }
 
     public void setPartidaList1(List<Partida> partidaList1) {
         this.partidaList1 = partidaList1;
@@ -172,10 +174,22 @@ public class Time implements Serializable {
         return true;
     }
 
-   public double calculaPontuacaoTotal(){
-       return 0;
-       //todo
+   public void calculaPontuacaoTotal(){
+       
+       double pontuacao = 0;
+       for(Partida p : partidas){
+           if(p.getTime1().getNome().equals(nome)){
+               pontuacao += p.pontuacaoTotTime1();
+           }else if(p.getTime2().getNome().equals(nome)){
+               pontuacao += p.pontuacaoTotTime2();
+           }
+       }
+       this.pontuacaoTotal = pontuacao;
    }
+
+    public void addPartidas(Partida p) {
+        this.partidas.add(p);
+    }
     
     
 }

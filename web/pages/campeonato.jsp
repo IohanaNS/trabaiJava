@@ -6,7 +6,7 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div class="w3-container" id="contact" style="margin-top:75px">
+<div id="divFundo"class="w3-container" id="contact" style="margin-top:75px">
     <h1 class="w3-xxxlarge w3-text-green"><b>Campeonato</b></h1>
     <hr style="width:50px;border:5px green;" class="w3-round">
     <h2 class="w3-xxlarge w3-text-green">Usuários disponíveis para jogar</h2>
@@ -18,7 +18,7 @@
           <fieldset style="text-align: center;width: 20%; ">
               <tr>
               <c:forEach items="${requestScope.users}" var="p"> 
-                  <td value="${p.login}">${p.login}</td><BR>
+                  <td value="${p.login}"><span class="label">${p.login}</span></td><BR>
           </c:forEach>
               </tr>
           </fieldset>
