@@ -49,6 +49,7 @@ public class SaveUserAction implements ICommanderAction{
             u.setTime(t);
             u.setSenha( Crypto.md5(u.getSenha()) );
         new UsuarioDao().inserir(u);
+        request.setAttribute("succ", "Cadastro feito com sucesso!");
         new CallViewLoginAction().executar(request, response);
        }
       

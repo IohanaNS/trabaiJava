@@ -31,6 +31,8 @@
         #divFundo{background-color: rgba(0, 0, 0, 0.3);}
         #trAltura{height: 300px;}
         #trAltura2{height:160px}
+        .livav{font-size: 15px;}
+        ul{list-style-type: none;}
     </style>
     <body>
 
@@ -45,7 +47,12 @@
                     <a href="home?ac=campeonato" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Campeonato</a>  
                     <a href="home?ac=consultaRanking" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ranking</a>
                     <c:if test="${sessionScope.user.ehAdmin}">
-                        <a href="index.jsp?page=admin" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Área do administrador</a>
+                        <ul class="w3-bar-item "><li>Área do administrador</li>
+                            <li>
+                                <a class=" w3-bar-item w3-button w3-hover-white livav" href="home?ac=cadastroTime" onclick="w3_close()">Cadastro de times</a></li>
+                            <li>
+                                <a class=" w3-bar-item w3-button w3-hover-white livav" href="home?ac=cadastroJogTime" onclick="w3_close()">Cadastro de Jogadores de times</a></li>
+                        </ul>
                     </c:if>
                     <a href="home?ac=logout" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sair</a>
                 </div>
@@ -82,7 +89,7 @@
                     <p>A página solicitada não existe</p> 
                 </c:if>
 
-                
+
 
                 <script>
                     // Script to open and close sidebar

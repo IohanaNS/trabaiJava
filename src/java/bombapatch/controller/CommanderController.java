@@ -5,9 +5,12 @@
  */
 package bombapatch.controller;
 
+import bombapatch.controller.impl.db.SaveJogTimeAction;
+import bombapatch.controller.impl.view.CallViewCadJogTimeAction;
+import bombapatch.controller.impl.db.SaveTimeAction;
+import bombapatch.controller.impl.view.CallViewCadTimeAction;
 import bombapatch.controller.impl.view.CallViewRankingAction;
 import bombapatch.controller.action.ICommanderAction;
-import bombapatch.controller.impl.db.AlteraTimeAction;
 import bombapatch.controller.impl.db.CalculaRankingAction;
 import bombapatch.controller.impl.db.SaveUserAction;
 import bombapatch.controller.impl.db.VotacaoTimesAction;
@@ -48,20 +51,30 @@ public class CommanderController extends HttpServlet {
     
     static{
         comandos = new HashMap<>();
-        
+        //CALL VIEWS////////////////////////////////
         comandos.put("",new CallViewLoginAction());
         comandos.put("login", new CallViewLoginAction());
-        comandos.put("cadUser", new CallViewCadUser());
-        comandos.put("saveUser", new SaveUserAction());
-        comandos.put("alteraTime", new AlteraTimeAction());
+        comandos.put("consultaRanking", new CallViewConsultaRankingAction());
         comandos.put("acessoNegado", new CallViewAcessoNegadoAction());
+        comandos.put("ranking", new CallViewRankingAction());
         comandos.put("campeonato", new CallViewHomeAction());
+        //view de cadastros
+        comandos.put("cadUser", new CallViewCadUser());
+        comandos.put("cadastroTime", new CallViewCadTimeAction());
+        comandos.put("cadastroJogTime", new CallViewCadJogTimeAction());
+        //ACTIONS//////////////////////////////////////////////////////////
         comandos.put("checkLogin", new CheckLoginAction());
         comandos.put("logout", new LogoutAction());
-        comandos.put("ranking", new CallViewRankingAction());
+        comandos.put("saveUser", new SaveUserAction());
+        comandos.put("saveTime", new SaveTimeAction());
         comandos.put("calculaRanking", new CalculaRankingAction());
         comandos.put("votacaoTimes", new VotacaoTimesAction()); 
-        comandos.put("consultaRanking", new CallViewConsultaRankingAction()); 
+        comandos.put("saveJogTime", new SaveJogTimeAction());
+         
+//         //TODO
+//         //TODO
+//         //TODO
+         //TODO
         
     }
     

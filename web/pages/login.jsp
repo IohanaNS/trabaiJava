@@ -4,8 +4,8 @@
     Author     : iohan
 --%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!-- Contact -->
 <div  id="divFundo" class="w3-container" id="contact" style="margin-top:75px">
     <h1 class="w3-xxxlarge w3-text-green"><b>Entrar</b></h1>
     <hr style="width:50px;border:5px green;" class="w3-round">
@@ -17,6 +17,12 @@
                     ${requestScope.err}
                 </div>
             </c:if>
+            <c:if test="${requestScope.succ != null}">
+                <div class="alert alert-danger">
+                    ${requestScope.succ}
+                </div>
+            </c:if>
+                
                 <label class="label">Login</label>
             <input class="w3-input w3-border" type="text" name="login" required>
         </div>

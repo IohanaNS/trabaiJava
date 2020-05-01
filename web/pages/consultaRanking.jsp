@@ -35,13 +35,13 @@
                 </c:forEach>
                 </tbody>
             </table>
-            <div class="w3-section" style=";">
+            <div class="w3-section">
                 <h3 class="w3-text-green">Colocação</h3>
           <fieldset style="text-align: center;width: 20%; ">
               <tr>
               <c:forEach items="${requestScope.ranking}" var="p"> 
                   <td><span class="label">${p.nome} -> ${p.pontuacaoTotal} </span></td><BR>
-          </c:forEach>
+              </c:forEach>
               </tr>
               
           </fieldset>

@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bombapatch.controller.impl.db;
+package bombapatch.controller.impl.view;
 
 import bombapatch.controller.action.ICommanderAction;
 import bombapatch.model.dao.impl.TimeDao;
-import bombapatch.model.dao.impl.UsuarioDao;
 import bombapatch.model.domain.Time;
-import bombapatch.model.domain.Usuario;
+import java.util.List;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -17,24 +17,24 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author iohan
  */
-public class AlteraTimeAction implements ICommanderAction{
+public class CallViewCadJogTimeAction implements ICommanderAction {
 
+    
     @Override
     public boolean ehLiberado() {
-        return true;
+        return false;
     }
 
     @Override
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=cadastroJogsTime");
+             
+        List<Time> lista = new TimeDao().buscarTodos();      
+        request.setAttribute("times", lista);
         
-        
-        Time t = new TimeDao().findByNome((String) request.getAttribute("time"));
-        Usuario u = new UsuarioDao().findByLogin((String) request.getAttribute("user"));
-        
-        t.setUsuario(u);
-        
-        Time ti = new TimeDao().alterar(t);
-        
+        rd.forward(request, response);
     }
+
+    
     
 }
