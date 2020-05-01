@@ -72,7 +72,7 @@ public class CampeonatoEstatistica implements Serializable {
                 for (int i = 0; i < ranking.size() - 1; i++)
                 {
                      
-                    if (ranking.get(i).getPontuacaoTotal() > ranking.get(i+1).getPontuacaoTotal())
+                    if (ranking.get(i).getPontuacaoTotal() < ranking.get(i+1).getPontuacaoTotal())
                     {
                         Time aux = ranking.get(i);
                         ranking.set(i, ranking.get(i+1));

@@ -6,8 +6,17 @@
 package bombapatch.controller.impl.view;
 
 import bombapatch.controller.action.ICommanderAction;
+import bombapatch.model.dao.impl.CampeonatoDao;
+import bombapatch.model.dao.impl.CampeonatoEstatisticaDao;
+import bombapatch.model.dao.impl.PartidaDao;
+import bombapatch.model.dao.impl.TimeDao;
 import bombapatch.model.dao.impl.UsuarioDao;
+import bombapatch.model.domain.Campeonato;
+import bombapatch.model.domain.CampeonatoEstatistica;
+import bombapatch.model.domain.Partida;
+import bombapatch.model.domain.Time;
 import bombapatch.model.domain.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +39,29 @@ public class CallViewConsultaRankingAction implements ICommanderAction{
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=consultaRanking");
         
         
-        rd.forward(request, response);
+        if(request.getAttribute("lista")!= null && request.getAttribute("ranking") != null 
+                && request.getAttribute("winner") != null){
+            rd.forward(request, response);
+        }else{
+            
+            Campeonato ca = new CampeonatoDao().findLast();
+            List<Partida> lista = new PartidaDao().findByCampeonato(ca);
+            List<Time> times = new TimeDao().findByCa(ca);
+            CampeonatoEstatistica ce = new CampeonatoEstatisticaDao().findLast();
+            times.forEach((t) -> ce.addTime(t));
+            List<Time> ranking = ce.calculaRanking();
+            Usuario winner = new UsuarioDao().findByCa(ca);
+            
+            request.setAttribute("lista", lista);
+            request.setAttribute("ranking", ranking);
+            request.setAttribute("winner", winner);
+            
+            rd.forward(request, response);
+
+        }
+        
+        
+        
     }
     
 }

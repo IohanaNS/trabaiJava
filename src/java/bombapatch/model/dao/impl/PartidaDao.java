@@ -45,7 +45,7 @@ public class PartidaDao extends GenericsDAO<Partida,Integer>{
 
     @Override
     public Partida buscarUm(Integer key) throws SQLException {
-        Query q = conexao.createQuery("SELECT u FROM campeonato WHERE u.idPartida = :idPartida");
+        Query q = conexao.createQuery("SELECT u FROM Partida u WHERE u.idPartida = :idPartida");
 
         try {
             q.setParameter("idPartida", key);
@@ -62,5 +62,17 @@ public class PartidaDao extends GenericsDAO<Partida,Integer>{
         Query q = conexao.createNamedQuery("Partida.findAll");
 
         return q.getResultList();
+    }
+    
+    public List<Partida> findByCampeonato(Object camp) throws SQLException {
+        Query q = conexao.createQuery("SELECT u FROM Partida u WHERE u.campeonato = :camp");
+
+       
+        try {
+            q.setParameter("camp", camp);
+            return q.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

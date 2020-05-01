@@ -14,21 +14,23 @@
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
     <style>
-        body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif;
-        }
+        body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif;}
         body {font-size:16px;overflow-y : scroll !important;overflow-x: scroll !important;}
         table {width: 100%;display:block;}
-        thead {display: inline-block;width: 100%;height: 20px;}
-        tbody {color: lightgray;height: 170px;display: inline-block;width: 100%;overflow: auto;}
+        thead {display: inline-block;width: 100%;height: 10px;}
+        tbody {color: lightgray;display: inline-block;width: 100%;overflow: auto;}
         .w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer;padding: 10px;}
         .w3-half img:hover{opacity:1}
         #teste{background-image: url(img/campo_futebol2.jpg);background-size: cover;}
         .selectProd{margin: 15px 0px 0px 5px;width: 50px;}
         #bombapatch{font-size: 35px;}
-        th{font-size: 30px;}
-        .inputran{margin: 20px;width: 70px;}
+        th{font-size: 20px;}
+        td{font-size: 20px;} 
+        .inputran{margin: 20px;width: 80px;}
         .label{color:lightgray !important;}
         #divFundo{background-color: rgba(0, 0, 0, 0.3);}
+        #trAltura{height: 300px;}
+        #trAltura2{height:160px}
     </style>
     <body>
 
@@ -56,7 +58,7 @@
             <span>Bombapatch</span>
         </header>
 
-        <div id="teste" class="w3-top w3-padding w3-xlarge">
+        <div id="teste" class="w3-top" style="height: 800px">
 
             <!-- Overlay effect when opening sidebar on small screens -->
             <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
@@ -80,12 +82,7 @@
                     <p>A página solicitada não existe</p> 
                 </c:if>
 
-
-
-
-
-                <!-- W3.CSS Container -->
-                <div class="w3-light-grey w3-container w3-padding-32" style="margin-top:75px;padding-right:58px"><p class="w3-right">Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-opacity">w3.css</a></p></div>
+                
 
                 <script>
                     // Script to open and close sidebar

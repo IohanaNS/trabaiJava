@@ -6,15 +6,16 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div id="divFundo"class="w3-container" id="contact" style="margin-top:75px">
+<div id="divFundo"class="w3-container" id="contact" style="margin-top:50px;height:550px">
     <h1 class="w3-xxxlarge w3-text-green"><b>Campeonato</b></h1>
     <hr style="width:50px;border:5px green;" class="w3-round">
     <h2 class="w3-xxlarge w3-text-green">Usuários disponíveis para jogar</h2>
 <!--    todo-->
+<div >
     <form action="home" method="post"> 
         <input type="hidden" name="ac" value="votacaoTimes"/>
         
-      <div class="w3-section">
+      <div class="w3-section" style="height: 265px !important;">
           <fieldset style="text-align: center;width: 20%; ">
               <tr>
               <c:forEach items="${requestScope.users}" var="p"> 
@@ -32,6 +33,8 @@
       <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Consultar ranking</button>
     
 </form>
+</div>
+    
   </div>
 
 <!-- End page content -->

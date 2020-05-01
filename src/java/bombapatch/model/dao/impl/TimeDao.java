@@ -6,6 +6,7 @@
 package bombapatch.model.dao.impl;
 
 import bombapatch.model.dao.GenericsDAO;
+import bombapatch.model.domain.Campeonato;
 import bombapatch.model.domain.Time;
 import bombapatch.model.domain.Usuario;
 import java.sql.SQLException;
@@ -73,6 +74,20 @@ public class TimeDao extends GenericsDAO<Time,Integer>{
         try {
             q.setParameter("nome", nome);
             return (Time) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException ex) {
+            return null;
+        }
+    }
+
+    public List<Time> findByCa(Campeonato ca) {
+        Query q = conexao.createQuery("SELECT ce.times FROM CampeonatoEstatistica ce WHERE ce.campeonato.idCampeonato = :ca");
+
+        
+        try {
+            q.setParameter("ca", ca.getIdCampeonato());
+           return q.getResultList();
         } catch (NoResultException e) {
             return null;
         } catch (NonUniqueResultException ex) {

@@ -7,6 +7,7 @@ package bombapatch.controller.impl.db;
 
 import bombapatch.controller.action.ICommanderAction;
 import bombapatch.controller.impl.view.CallViewConsultaRankingAction;
+import bombapatch.controller.impl.view.CallViewRankingAction;
 import bombapatch.model.dao.impl.CampeonatoDao;
 import bombapatch.model.dao.impl.CampeonatoEstatisticaDao;
 import bombapatch.model.dao.impl.PartidaDao;
@@ -36,9 +37,7 @@ public class CalculaRankingAction implements ICommanderAction{
 
     @Override
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-       
-          
-        
+
         String[] placarTime1 = request.getParameterValues("placarTime1");
         String[] golsArTime1 = request.getParameterValues("golsArTime1");
         String[] placarTime2 = request.getParameterValues("placarTime2");
@@ -54,6 +53,8 @@ public class CalculaRankingAction implements ICommanderAction{
         
         CampeonatoEstatistica ce = new CampeonatoEstatisticaDao().findLast();
         ce.setCampeonato(c);
+        new CampeonatoEstatisticaDao().alterar(ce);
+        CampeonatoEstatistica ce2 = new CampeonatoEstatisticaDao().findLast();
                
 
         
@@ -79,9 +80,12 @@ public class CalculaRankingAction implements ICommanderAction{
             p.setPontuacaoTime1(Integer.parseInt(placarTime1[i]));
             p.setPontuacaoTime2(Integer.parseInt(placarTime2[i]));
             
-            partidas.add(p);
+           partidas.add(p);
         }
         
+    
+      
+
         //calculando pontuação total de todas as partidas
         for(Time t : times1){
             for(Partida p : partidas){
@@ -89,28 +93,44 @@ public class CalculaRankingAction implements ICommanderAction{
                     t.addPartidas(p);
                 }
             }
-            t.calculaPontuacaoTotal();
-            ce.addTime(t);
+           t.calculaPontuacaoTotal();
+           t.setCampeonatoEstatistica(ce2);
+           new TimeDao().alterar(t);
         }
         for(Time t : times2){
             for(Partida p : partidas){
                 if(t.getNome().equals(p.getTime2().getNome())){
                     t.addPartidas(p);
                 }
-            }
+            }           
             t.calculaPontuacaoTotal();
-            ce.addTime(t);
+            t.setCampeonatoEstatistica(ce2);
+            new TimeDao().alterar(t);
         }
+        
         
         for(Partida p : partidas){
+            p.setCampeonato(c);
             new PartidaDao().inserir(p);
         }
+        //////////////////////////////////////////////ate aqio ta ok, acho ///////////////////////////
         
-        
+          List<Time> listanova = new TimeDao().findByCa(c);
+       
+        //calculando o ranking baseando nos times atualizados
+        for(Time t : listanova)ce.addTime(t);
+       
         List<Time> ranking = ce.calculaRanking();
+        
+        
+        
         for(Time t : ranking){
             t.setCampeonatoEstatistica(ce);
         }
+        for(Time t : ranking){
+            new TimeDao().alterar(t);
+        }
+        
         
         Usuario winner = new UsuarioDao().findByTeam(ranking.get(0));
         
@@ -141,7 +161,13 @@ public class CalculaRankingAction implements ICommanderAction{
         request.setAttribute("ranking", ranking);
         request.setAttribute("winner", winner);
         
-        new CallViewConsultaRankingAction().executar(request, response);
+        if(lista.isEmpty() || ranking.isEmpty() || winner == null){
+            request.setAttribute("err", "Algum objeto está nulo");
+            new CallViewRankingAction().executar(request, response);
+        }else{
+            new CallViewConsultaRankingAction().executar(request, response);
+        }
+        
     }
     
 }

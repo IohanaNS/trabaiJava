@@ -66,7 +66,7 @@ public class CampeonatoEstatisticaDao extends GenericsDAO<CampeonatoEstatistica,
     }
     
     public CampeonatoEstatistica findLast() throws SQLException{
-        Query q = conexao.createQuery("SELECT u FROM CampeonatoEstatistica u ORDER BY u.idCampeonatoEstatistica DESC");
+        Query q = conexao.createQuery("SELECT u FROM CampeonatoEstatistica u ORDER BY u.idEstatistica DESC");
         q.setMaxResults(1);
 
         try {

@@ -6,38 +6,47 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<div id="divFundo" class="w3-container" id="contact" style="margin-top:75px">
+<div id="divFundo" class="w3-container" id="contact" style="margin-top:30px;">
     <h1 class="w3-xxxlarge w3-text-green"><b>Ranking</b></h1>
     <hr style="width:50px;border:5px green;" class="w3-round">
-    <h2 class="w3-xxlarge w3-text-green">Faça a sua votação</h2>
+
     <!--    todo-->
     <form action="home" method="post"> 
         <div class="w3-section">
-            <table style="width: 100%;text-align: center ;height:100%;">
-                <TH>Time</TH>
-                <TH>Placar</TH>
-                <TH>&nbsp;&nbsp;&nbsp;Gols de artilheiro</TH>
+            <table style="height: 330px;text-align: center;">
+
+
+
+                <tbody id="trAltura">
                     <c:forEach items="${requestScope.partidas}" var="p">
 
-                    <tr>
-                        <td>${p.time1.nome}</td>
-                        <input type="hidden" name="nometime1" value="${p.time1.nome}"/>
-                        <td><input class="inputran" type="text" name="placarTime1"></td>
-                        <td><input class="inputran" type="text" name="golsArTime1"></td>
 
+                    <th>${p.time1.nome}</th>
+                    <input type="hidden" name="nometime1" value="${p.time1.nome}"/>
+                    <td>&nbsp;</td>
+                    <th>&nbsp;${p.time2.nome}</th>
+                    <input type="hidden" name="nometime2" value="${p.time2.nome}"/>
+
+                    <tr>
+
+                        <td><input class="inputran"  type="text" placeholder="placar" name="placarTime1" required></td>
+                        <td>X</td>
+                        <td><input class="inputran" type="text" placeholder="placar" name="placarTime2" required></td>
                     </tr>
                     <tr>
-                        <td>${p.time2.nome}</td>
-                        <input type="hidden" name="nometime2" value="${p.time2.nome}"/>
-                        <td><input class="inputran" type="text" name="placarTime2"></td>
-                        <td><input class="inputran" type="text" name="golsArTime2"></td>
+                        <td> <h3>${p.time1.nome} : gols de artilheiro</h3></td>
+                        <td> <input class="inputran"  type="text" name="golsArTime1" required> </td> 
                     </tr>
-                    <td>-----------------------</td>
-                    
+                    <tr>
+                        <td> <h3>${p.time2.nome} : gols de artilheiro</h3></td>
+                        <td> <input class="inputran"  type="text" name="golsArTime2" required> </td> 
+                    </tr>
                 </c:forEach>
+                </tbody>
+
             </table>
         </div>
- 
+
         <input type="hidden" name="ac" value="calculaRanking"/>
         <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Enviar</button>
 

@@ -59,7 +59,7 @@ public class CommanderController extends HttpServlet {
         comandos.put("checkLogin", new CheckLoginAction());
         comandos.put("logout", new LogoutAction());
         comandos.put("ranking", new CallViewRankingAction());
-        comandos.put("calculaRanking", new CalculaRankingAction()); ///TO DO
+        comandos.put("calculaRanking", new CalculaRankingAction());
         comandos.put("votacaoTimes", new VotacaoTimesAction()); 
         comandos.put("consultaRanking", new CallViewConsultaRankingAction()); 
         
