@@ -61,30 +61,41 @@ public class CampeonatoEstatistica implements Serializable {
         
     }
 
+    public CampeonatoEstatistica(Campeonato camp) {
+        this.campeonato = camp;
+    }
+
     public List<Time> calculaRanking() {
 
          boolean troca = true;
          List<Time> ranking = times;
-         
             do
             {
                 troca = false;
                 for (int i = 0; i < ranking.size() - 1; i++)
-                {
-                     
+                {                
                     if (ranking.get(i).getPontuacaoTotal() < ranking.get(i+1).getPontuacaoTotal())
                     {
                         Time aux = ranking.get(i);
                         ranking.set(i, ranking.get(i+1));
                         ranking.set(i+1, aux);
-                        
-
                         troca = true;
                     }
                 }
             } while (troca);
+            
+             ArrayList<Time> lista2 = new ArrayList<>();
+             
+            for (int i = 0; i < ranking.size(); i++) {
+                if(i % 2 == 0){
+                    lista2.add(ranking.get(i));
+                }
+            
+            }
+           
+            
 
-        return times;
+        return lista2;
     }
     
     public CampeonatoEstatistica(Integer idEstatistica) {

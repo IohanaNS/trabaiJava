@@ -69,11 +69,23 @@ public class Time implements Serializable {
     
     @Transient 
     private ArrayList<Partida> partidas;
+    
+    @Transient
+    private boolean temArtilheiro;
 
     public Time() {
         this.partidas = new ArrayList<Partida>();
     }
 
+    public boolean isTemArtilheiro() {
+        return temArtilheiro;
+    }
+
+    public void setTemArtilheiro(boolean temArtilheiro) {
+        this.temArtilheiro = temArtilheiro;
+    }
+    
+    
     public Time(Integer idTime) {
         this.idTime = idTime;
     }
@@ -178,18 +190,18 @@ public class Time implements Serializable {
        
        double pontuacao = 0;
        for(Partida p : partidas){
-           if(p.getTime1().getNome().equals(nome)){
-               pontuacao += p.pontuacaoTotTime1();
-           }else if(p.getTime2().getNome().equals(nome)){
-               pontuacao += p.pontuacaoTotTime2();
-           }
-       }
+               pontuacao += p.pontuacaoTotTime(nome);
+        }
+       if(temArtilheiro) pontuacao += 5;
        this.pontuacaoTotal = pontuacao;
    }
 
     public void addPartidas(Partida p) {
         this.partidas.add(p);
     }
-    
-    
 }
+
+    
+    
+    
+

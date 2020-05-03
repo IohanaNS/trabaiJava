@@ -6,6 +6,7 @@
 package bombapatch.controller.impl.view;
 
 import bombapatch.controller.action.ICommanderAction;
+import bombapatch.model.dao.dto.UsuarioLoginDTO;
 import bombapatch.model.dao.impl.CampeonatoDao;
 import bombapatch.model.dao.impl.CampeonatoEstatisticaDao;
 import bombapatch.model.dao.impl.PartidaDao;
@@ -40,14 +41,18 @@ public class CallViewConsultaRankingAction implements ICommanderAction{
         
         
         if(request.getAttribute("lista")!= null && request.getAttribute("ranking") != null 
-                && request.getAttribute("winner") != null){
+                && request.getAttribute("winner") != null && request.getAttribute("times") != null){
             rd.forward(request, response);
         }else{
+            UsuarioLoginDTO userLog = (UsuarioLoginDTO)request.getSession().getAttribute("user");
+        
+            Usuario u = new UsuarioDao().findByLogin(userLog.getLogin());
+
+            Campeonato ca = new CampeonatoDao().findByUser(userLog);
             
-            Campeonato ca = new CampeonatoDao().findLast();
             List<Partida> lista = new PartidaDao().findByCampeonato(ca);
             List<Time> times = new TimeDao().findByCa(ca);
-            CampeonatoEstatistica ce = new CampeonatoEstatisticaDao().findLast();
+            CampeonatoEstatistica ce = new CampeonatoEstatisticaDao().findByCampeonato(ca);
             times.forEach((t) -> ce.addTime(t));
             List<Time> ranking = ce.calculaRanking();
             Usuario winner = new UsuarioDao().findByCa(ca);

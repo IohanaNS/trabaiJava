@@ -11,24 +11,22 @@
     <hr style="width:50px;border:5px green;" class="w3-round">
     <h3 class=" w3-text-green">Resultados</h3>
     <!--    todo-->
-    <form action="home" method="post"> 
+    <form action="home?ac=criarSala" method="post"> 
         <div>
             <table style="width: 100%;text-align: center ;">
                 <tbody id="trAltura2">
                      <TH><span style="color:#4CAF50;">Time</span></TH>
                 <TH><span style="color:#4CAF50;">Placar</span></TH>
-                <TH>&nbsp;&nbsp;&nbsp;<span style="color:#4CAF50;">Gols de artilheiro</span></TH>
+
                     <c:forEach items="${requestScope.lista}" var="p">
                     <tr>
                         <td>${p.time1.nome}</td>
                         <td>${p.pontuacaoTime1}</td>
-                        <td>${p.golsdeArtilheiroTime1}</td>
-
                     </tr>
                     <tr>
                         <td>${p.time2.nome}</td>
                         <td>${p.pontuacaoTime2}</td>
-                        <td>${p.golsdeArtilheiroTime2}</td>
+                        
                     </tr>
                     <td>____________________</td>
 
@@ -51,10 +49,8 @@
 
 
             <h2 style="font-weight: bold;font-size: 25px;"class=" w3-text-green">Time: <span style="color:lightgray;">${requestScope.winner.time.nome}</span></h2> 
-
-        
-
-        <input type="hidden" name="ac" value="calculaRanking"/>
+            
+       
         <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Outro campeonato?</button>
 
     </form>

@@ -6,20 +6,15 @@
 package bombapatch.controller.impl.db;
 
 import bombapatch.controller.action.ICommanderAction;
-import bombapatch.controller.impl.view.CallViewRankingAction;
+import bombapatch.controller.impl.view.CallViewEntraEmSalaAction;
+import bombapatch.controller.impl.view.CallViewHomeAction;
 import bombapatch.model.dao.dto.UsuarioLoginDTO;
 import bombapatch.model.dao.impl.CampeonatoDao;
-import bombapatch.model.dao.impl.CampeonatoEstatisticaDao;
-import bombapatch.model.dao.impl.PartidaDao;
 import bombapatch.model.dao.impl.TimeDao;
 import bombapatch.model.dao.impl.UsuarioDao;
 import bombapatch.model.domain.Campeonato;
-import bombapatch.model.domain.CampeonatoEstatistica;
-import bombapatch.model.domain.Partida;
 import bombapatch.model.domain.Time;
 import bombapatch.model.domain.Usuario;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author iohan
  */
-public class VotacaoTimesAction implements ICommanderAction {
+public class saveUserEmSalaAction implements ICommanderAction {
 
     @Override
     public boolean ehLiberado() {
@@ -38,18 +33,27 @@ public class VotacaoTimesAction implements ICommanderAction {
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         UsuarioLoginDTO userLog = (UsuarioLoginDTO) request.getSession().getAttribute("user");
-        Campeonato camp = new CampeonatoDao().findByUser(userLog);
-        List<Usuario> users = new UsuarioDao().findByCampeonato(camp);
 
-        List<Time> times = new TimeDao().findByCa(camp);
+        Usuario u = new UsuarioDao().findByLogin(userLog.getLogin());
 
-        Partida p = new Partida();
-        ArrayList<Partida> partidas = p.ordenaPartidas(times);
+        Campeonato c = new Campeonato(request.getParameter("escolhaSala"));
 
-        request.setAttribute("times", times);
-        request.setAttribute("partidas", partidas);
-        request.setAttribute("camp", camp);
-        new CallViewRankingAction().executar(request, response);
+        Campeonato ca = new CampeonatoDao().findByNomeSala(c.getSala());
+
+        u.setCampeonato(ca);
+
+        Time t = new TimeDao().findByNome(request.getParameter("escolhaTime"));
+
+        if (t.getUsuario() == null) {
+            u.setTime(t);
+            new UsuarioDao().alterar(u);
+            request.setAttribute("succ", "Sucesso! Agora você faz parte da sala " + ca.getSala());
+            new CallViewHomeAction().executar(request, response);
+        } else {
+            request.setAttribute("err", "Time já escolhido por outro usuario para este campeonato");
+            new CallViewEntraEmSalaAction().executar(request, response);
+        }
+
     }
 
 }

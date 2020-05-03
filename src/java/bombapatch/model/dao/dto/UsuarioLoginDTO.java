@@ -5,6 +5,8 @@
  */
 package bombapatch.model.dao.dto;
 
+import bombapatch.model.domain.Campeonato;
+
 /**
  *
  * @author daves
@@ -15,16 +17,31 @@ public class UsuarioLoginDTO {
     private String login;
     private boolean ehAdmin;
     private String senha;
+    private Campeonato campeonato;
 
     public UsuarioLoginDTO() {
     }
 
+    public UsuarioLoginDTO(Integer idUsuario, String login, boolean ehAdmin, Campeonato campeonato) {
+        this.idUsuario = idUsuario;
+        this.login = login;
+        this.ehAdmin = ehAdmin;
+        this.campeonato = campeonato;
+    }
     public UsuarioLoginDTO(Integer idUsuario, String login, boolean ehAdmin) {
         this.idUsuario = idUsuario;
         this.login = login;
         this.ehAdmin = ehAdmin;
     }
 
+    public Campeonato getCampeonato() {
+        return campeonato;
+    }
+
+    public void setCampeonato(Campeonato campeonato) {
+        this.campeonato = campeonato;
+    }
+    
     public String getSenha() {
         return senha;
     }

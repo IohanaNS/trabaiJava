@@ -6,8 +6,12 @@
 package bombapatch.controller.impl.view;
 
 import bombapatch.controller.action.ICommanderAction;
+import bombapatch.model.dao.dto.UsuarioLoginDTO;
+import bombapatch.model.dao.impl.CampeonatoDao;
 import bombapatch.model.dao.impl.UsuarioDao;
+import bombapatch.model.domain.Campeonato;
 import bombapatch.model.domain.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -28,12 +32,35 @@ public class CallViewHomeAction implements ICommanderAction{
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
        
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=campeonato");
+    
         
-        List<Usuario> users = new UsuarioDao().findLast4(); //TESTE
+        UsuarioLoginDTO userLog = (UsuarioLoginDTO)request.getSession().getAttribute("user");
         
-        request.setAttribute("users", users);
+        Usuario u = new UsuarioDao().findByLogin(userLog.getLogin());
         
-        rd.forward(request, response);
+        if(u.getCampeonato() != null){
+            Campeonato c = new CampeonatoDao().findByUser(userLog);
+            List<Usuario> users = new UsuarioDao().findByCampeonato(c);
+             boolean count = true;
+             
+            if(users.size() < 4){
+                count = false;
+            }
+            
+            request.setAttribute("count", count);
+            request.setAttribute("users", users);
+             rd.forward(request, response);
+        }else{
+            boolean count = false;
+            ArrayList<Usuario> users = new ArrayList<>();
+            request.setAttribute("count", count);
+            request.setAttribute("users", users);
+             rd.forward(request, response);
+        }
+        
+       
+  
+            
     }
     
 }

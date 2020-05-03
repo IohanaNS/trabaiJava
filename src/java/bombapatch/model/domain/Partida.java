@@ -7,6 +7,7 @@ package bombapatch.model.domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -133,7 +134,7 @@ public class Partida implements Serializable {
         this.time2 = time2;
     }
 
-    public ArrayList<Partida> ordenaPartidas(ArrayList<Time> times) { 
+    public ArrayList<Partida> ordenaPartidas(List<Time> times) { 
 
         ArrayList<Partida> partidas = new ArrayList<>();
 
@@ -152,21 +153,18 @@ public class Partida implements Serializable {
 
     }
     
-    public double pontuacaoTotTime1(){
-        //vitoria 3pts , cada gol 1 pto, gol tomado -0.5, golart 5 extra
-        double ptoExtra = 0;
-        if(golsdeArtilheiroTime1 > 0) ptoExtra = 5;
-        double ptoTot = ptoExtra + ptoTime1 - (Double.parseDouble(Integer.toString(ptoTime2))/2);
-        if((golsdeArtilheiroTime2 + ptoTime2) < ptoTot) ptoTot += 3;
+    public double pontuacaoTotTime(String t){
+        //vitoria 3pts , cada gol 1 pto, gol tomado -0.5, 
+        double ptoTot = 0;
+        if(time1.getNome().equals(t)){
+             ptoTot =  ptoTime1 - (Double.parseDouble(Integer.toString(ptoTime2))/2);
+            if(ptoTime2 < ptoTime1) ptoTot += 3;
         
-        return ptoTot;
-    }
-    public double pontuacaoTotTime2(){
-        //vitoria 3pts , cada gol 1 pto, gol tomado -0.5, golart 5 extra
-        double ptoExtra = 0;
-        if(golsdeArtilheiroTime2 > 0) ptoExtra = 5;
-        double ptoTot = ptoExtra + ptoTime2 - (Double.parseDouble(Integer.toString(ptoTime1))/2);
-        if((golsdeArtilheiroTime1 + ptoTime1) < ptoTot) ptoTot += 3;
+        }else if(time2.getNome().equals(t)){
+            ptoTot = ptoTime2 - (Double.parseDouble(Integer.toString(ptoTime1))/2);
+            if(ptoTime1 < ptoTime2) ptoTot += 3;
+        }
+       
         
         return ptoTot;
     }

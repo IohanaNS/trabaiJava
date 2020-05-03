@@ -6,8 +6,10 @@
 package bombapatch.model.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,6 +41,11 @@ public class Campeonato implements Serializable {
     @Column(name = "idCampeonato", nullable = false)
     private Integer idCampeonato;
 
+    @Column
+    private String sala;
+    
+    @OneToMany(mappedBy = "campeonato",cascade = CascadeType.ALL)
+    private List<Usuario> usuarios;
     
     @OneToMany(mappedBy = "campeonato")
     private List<CampeonatoEstatistica> campeonatoEstatisticaList;
@@ -46,8 +53,29 @@ public class Campeonato implements Serializable {
 
 
     public Campeonato() {
+        this.usuarios = new ArrayList<>();
+    }
+    public Campeonato(String sala) {
+    this.sala = sala;
+    this.usuarios = new ArrayList<>();
     }
 
+    public List<Usuario> getUsuarios() {
+        return usuarios;
+    }
+
+    public void setUsuarios(List<Usuario> usuarios) {
+        this.usuarios = usuarios;
+    }
+    
+    public String getSala() {
+        return sala;
+    }
+
+    public void setSala(String sala) {
+        this.sala = sala;
+    }
+    
     public Campeonato(Integer idCampeonato) {
         this.idCampeonato = idCampeonato;
     }

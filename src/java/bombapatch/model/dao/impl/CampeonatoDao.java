@@ -6,7 +6,9 @@
 package bombapatch.model.dao.impl;
 
 import bombapatch.model.dao.GenericsDAO;
+import bombapatch.model.dao.dto.UsuarioLoginDTO;
 import bombapatch.model.domain.Campeonato;
+import bombapatch.model.domain.Usuario;
 import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -71,6 +73,51 @@ public class CampeonatoDao extends GenericsDAO<Campeonato,Integer>{
 
         try {
             
+            return (Campeonato) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException ex) {
+            return null;
+        }
+    }
+
+    public Campeonato findByUser(UsuarioLoginDTO u) {
+        Query q = conexao.createQuery("SELECT u FROM Campeonato u WHERE u.idCampeonato = :idCampeonato");
+
+        try {
+            q.setParameter("idCampeonato", u.getCampeonato().getIdCampeonato());
+            return (Campeonato) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException ex) {
+            return null;
+        }
+    }
+
+    public List<String> findBySalas() {
+        
+//        Query q = conexao.createQuery("SELECT DISTINCT c.sala FROM Campeonato c JOIN c.usuarios u WHERE u.campeonato.idCampeonato = c.idCampeonato ");
+//        
+        Query q = conexao.createQuery("SELECT c.sala FROM Campeonato c JOIN c.usuarios u WHERE"
+                + " c.idCampeonato = u.campeonato.idCampeonato "
+                + "GROUP BY c.sala HAVING COUNT(c.idCampeonato) < 4");
+
+        try {
+            
+            return q.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException ex) {
+            return null;
+        }
+    }
+
+    public Campeonato findByNomeSala(String sala) {
+        
+        Query q = conexao.createQuery("SELECT u FROM Campeonato u WHERE u.sala = :sala");
+
+        try {
+            q.setParameter("sala", sala);
             return (Campeonato) q.getSingleResult();
         } catch (NoResultException e) {
             return null;

@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -36,7 +37,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
     , @NamedQuery(name = "Usuario.findByIdUsuario", query = "SELECT u FROM Usuario u WHERE u.idUsuario = :idUsuario")
-    , @NamedQuery(name = "Usuario.findByLogin", query = "SELECT u FROM Usuario u WHERE u.login = :login")
+    , @NamedQuery(name = "Usuario.findByLogin", query = "SELECT u FROM Usuario u WHERE u.login = :log")
     , @NamedQuery(name = "Usuario.findBySenha", query = "SELECT u FROM Usuario u WHERE u.senha = :senha")
        , @NamedQuery(name = "Usuario.findByLoginAndSenha", query = "SELECT u FROM Usuario u WHERE u.login = :log and u.senha = :sen")
     , @NamedQuery(name = "Usuario.findByEmail", query = "SELECT u FROM Usuario u WHERE u.email = :email")})
@@ -58,7 +59,7 @@ public class Usuario implements Serializable {
     private String email;
     
     @OneToOne
-    @JoinColumn(unique = true, name="idTime")
+    @JoinColumn(name="idTime")
     private Time time;
     
     @OneToMany(mappedBy = "usuario",cascade = CascadeType.ALL)
@@ -66,6 +67,10 @@ public class Usuario implements Serializable {
     
     @Column(columnDefinition = "TINYINT",nullable = true)
     private boolean ehAdmin = false;
+    
+    @ManyToOne
+    @JoinColumn(name="idCampeonato")
+    private Campeonato campeonato;
 
     public Usuario() {
     }
@@ -83,6 +88,15 @@ public class Usuario implements Serializable {
         this.email = email;
     }
 
+    public Campeonato getCampeonato() {
+        return campeonato;
+    }
+
+    public void setCampeonato(Campeonato campeonato) {
+        this.campeonato = campeonato;
+    }
+    
+    
     public Integer getIdUsuario() {
         return idUsuario;
     }

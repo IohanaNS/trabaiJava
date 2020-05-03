@@ -6,6 +6,7 @@
 package bombapatch.model.dao.impl;
 
 import bombapatch.model.dao.GenericsDAO;
+import bombapatch.model.domain.Campeonato;
 import bombapatch.model.domain.CampeonatoEstatistica;
 import java.sql.SQLException;
 import java.util.List;
@@ -71,6 +72,20 @@ public class CampeonatoEstatisticaDao extends GenericsDAO<CampeonatoEstatistica,
 
         try {
             
+            return (CampeonatoEstatistica) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException ex) {
+            return null;
+        }
+    }
+
+    public CampeonatoEstatistica findByCampeonato(Campeonato ca) {
+        Query q = conexao.createQuery("SELECT u FROM CampeonatoEstatistica u WHERE u.campeonato.idCampeonato= :ca");
+        q.setMaxResults(1);
+
+        try {
+            q.setParameter("ca", ca.getIdCampeonato());
             return (CampeonatoEstatistica) q.getSingleResult();
         } catch (NoResultException e) {
             return null;

@@ -18,19 +18,23 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author iohan
  */
-public class CallViewCadUser implements ICommanderAction{
+public class CallViewCriaSalaAction implements ICommanderAction {
 
     @Override
     public boolean ehLiberado() {
-        return true;
+        return false;
     }
 
     @Override
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=cadastrar");
         
+        RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=criaSala");
+       
         
+        List<Time> times = new TimeDao().buscarTodos(); 
         
+            
+        request.setAttribute("times", times);
         
         rd.forward(request, response);
     }

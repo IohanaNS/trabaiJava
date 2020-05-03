@@ -32,21 +32,11 @@ public class SaveUserAction implements ICommanderAction{
         
         
         Usuario u = new Usuario(null,request.getParameter("login"), request.getParameter("senha"), request.getParameter("email"), false);
-        
-        
-        
-        
-       Time t = new TimeDao().findByNome(request.getParameter("escolhaTime"));
-       
-       if(t.getUsuario() != null){
-            request.setAttribute("err","Time já escolhido por outro usuário");
-           new CallViewCadUser().executar(request, response);
-          
-       }else if(u.getSenha().length() < 6){
+
+       if(u.getSenha().length() < 6){
            request.setAttribute("err", "A senha deve ter no mínimo 6 caracteres");
            new CallViewCadUser().executar(request, response);
        }else{
-            u.setTime(t);
             u.setSenha( Crypto.md5(u.getSenha()) );
         new UsuarioDao().inserir(u);
         request.setAttribute("succ", "Cadastro feito com sucesso!");

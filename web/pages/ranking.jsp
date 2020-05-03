@@ -33,18 +33,17 @@
                         <td>X</td>
                         <td><input class="inputran" type="text" placeholder="placar" name="placarTime2" required></td>
                     </tr>
-                    <tr>
-                        <td> <h3>${p.time1.nome} : gols de artilheiro</h3></td>
-                        <td> <input class="inputran"  type="text" name="golsArTime1" required> </td> 
-                    </tr>
-                    <tr>
-                        <td> <h3>${p.time2.nome} : gols de artilheiro</h3></td>
-                        <td> <input class="inputran"  type="text" name="golsArTime2" required> </td> 
-                    </tr>
                 </c:forEach>
                 </tbody>
-
             </table>
+            <label class="label">Qual time tem o artilheiro?</label>
+            <select name="times">
+            <c:forEach items="${requestScope.times}" var="p">
+                
+                    <option value="${p.nome}">${p.nome}</option>
+               
+            </c:forEach>
+            </select>
         </div>
 
         <input type="hidden" name="ac" value="calculaRanking"/>

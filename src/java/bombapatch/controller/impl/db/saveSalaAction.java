@@ -6,20 +6,14 @@
 package bombapatch.controller.impl.db;
 
 import bombapatch.controller.action.ICommanderAction;
-import bombapatch.controller.impl.view.CallViewRankingAction;
+import bombapatch.controller.impl.view.CallViewHomeAction;
 import bombapatch.model.dao.dto.UsuarioLoginDTO;
 import bombapatch.model.dao.impl.CampeonatoDao;
 import bombapatch.model.dao.impl.CampeonatoEstatisticaDao;
-import bombapatch.model.dao.impl.PartidaDao;
-import bombapatch.model.dao.impl.TimeDao;
 import bombapatch.model.dao.impl.UsuarioDao;
 import bombapatch.model.domain.Campeonato;
 import bombapatch.model.domain.CampeonatoEstatistica;
-import bombapatch.model.domain.Partida;
-import bombapatch.model.domain.Time;
 import bombapatch.model.domain.Usuario;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -27,7 +21,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author iohan
  */
-public class VotacaoTimesAction implements ICommanderAction {
+public class saveSalaAction implements ICommanderAction {
 
     @Override
     public boolean ehLiberado() {
@@ -36,20 +30,26 @@ public class VotacaoTimesAction implements ICommanderAction {
 
     @Override
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        
+        
+        Campeonato camp = new Campeonato(request.getParameter("nome"));
+        new CampeonatoDao().inserir(camp);
+        
+        Campeonato c = new CampeonatoDao().findLast();
+        
+        new CampeonatoEstatisticaDao().inserir(new CampeonatoEstatistica(c));
+        
+        UsuarioLoginDTO u = (UsuarioLoginDTO)request.getSession().getAttribute("user");
+        
+        Usuario us = new UsuarioDao().findByLogin(u.getLogin());
 
-        UsuarioLoginDTO userLog = (UsuarioLoginDTO) request.getSession().getAttribute("user");
-        Campeonato camp = new CampeonatoDao().findByUser(userLog);
-        List<Usuario> users = new UsuarioDao().findByCampeonato(camp);
-
-        List<Time> times = new TimeDao().findByCa(camp);
-
-        Partida p = new Partida();
-        ArrayList<Partida> partidas = p.ordenaPartidas(times);
-
-        request.setAttribute("times", times);
-        request.setAttribute("partidas", partidas);
-        request.setAttribute("camp", camp);
-        new CallViewRankingAction().executar(request, response);
+        us.setCampeonato(c);
+        new UsuarioDao().alterar(us);
+        
+        request.setAttribute("succ", "Sala criada com sucesso! Aguarde outros jogadores entrar para inciar o campeonato");
+        new CallViewHomeAction().executar(request, response);
+        
+        
     }
-
+    
 }

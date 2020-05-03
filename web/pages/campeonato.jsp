@@ -9,33 +9,71 @@
 <div id="divFundo"class="w3-container" id="contact" style="margin-top:50px;height:550px">
     <h1 class="w3-xxxlarge w3-text-green"><b>Campeonato</b></h1>
     <hr style="width:50px;border:5px green;" class="w3-round">
-    <h2 class="w3-xxlarge w3-text-green">Usuários disponíveis para jogar</h2>
-<!--    todo-->
-<div >
-    <form action="home" method="post"> 
-        <input type="hidden" name="ac" value="votacaoTimes"/>
-        
-      <div class="w3-section" style="height: 265px !important;">
-          <fieldset style="text-align: center;width: 20%; ">
-              <tr>
-              <c:forEach items="${requestScope.users}" var="p"> 
-                  <td value="${p.login}"><span class="label">${p.login}</span></td><BR>
-          </c:forEach>
-              </tr>
-          </fieldset>
-      </div>
-        
-      <c:if test="${sessionScope.user.ehAdmin}">
-      <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Iniciar</button>
-      </c:if>
-    </form>
-<form action="home?ac=consultaRanking" method="post">
-      <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Consultar ranking</button>
-    
-</form>
+    <c:if test="${requestScope.err != null}">
+        <div class="alert alert-danger">
+            ${requestScope.err}
+        </div>
+    </c:if>
+    <c:if test="${requestScope.succ != null}">
+        <div class="alert alert-danger">
+            ${requestScope.succ}
+        </div>
+    </c:if>
+    <h2 class="w3-xxlarge w3-text-green">Usuários na sala</h2>
+    <!--    todo-->
+    <div >
+        <form action="home" method="post"> 
+            <input type="hidden" name="ac" value="votacaoTimes"/>
+
+            <div class="w3-section" style="height: 265px !important;">
+                <fieldset style="text-align: center;width: 30%; ">
+                    <tr>
+                        <c:if test="${requestScope.users != null}">
+                            <c:forEach items="${requestScope.users}" var="p"> 
+                                <td value="${p.login}"><span class="label">${p.login} | time -> ${p.time.nome}</span></td><BR>
+                                </c:forEach>
+                            </c:if>
+
+                    </tr>
+                </fieldset>
+            </div>
+
+            <c:if test="${sessionScope.user.ehAdmin}">
+                <c:if test="${count == true}">
+                    <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Iniciar</button>
+                </c:if>
+
+            </c:if> 
+        </form>  
+        <form action="home?ac=consultaRanking" method="post">
+            <c:if test="${count == true}">
+                <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Consultar ranking</button>
+            </c:if>
+        </form>
+        <form action="home?ac=criarSala" method="post">
+
+            <c:if test="${count == false}">
+                <c:if test="${sessionScope.user.ehAdmin}">
+                    <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Criar uma sala</button>
+                </c:if>
+            </c:if>
+        </form>
+        <c:if test="${sessionScope.user.ehAdmin == false && sessionScope.user.campeonato == null}">
+                <form action="home?ac=entrarEmSala" method="post">
+                    <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Entre em uma sala</button>
+                </form>    
+        </c:if>
+        <c:if test="${sessionScope.user.ehAdmin == false && sessionScope.user.campeonato != null}">
+                <form action="home?ac=entrarEmSala" method="post">
+                    <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Entre em uma outra sala</button>
+                </form>    
+        </c:if>
+        <c:if test="${sessionScope.user.campeonato != null && count == false && sessionScope.user.ehAdmin ==false}">
+            <h3 class="w3-xlarge w3-text-green">Volte mais tarde para checar os resultados!</h3>
+        </c:if>
+    </div>
+
 </div>
-    
-  </div>
 
 <!-- End page content -->
 </div>

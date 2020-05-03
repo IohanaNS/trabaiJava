@@ -5,6 +5,10 @@
  */
 package bombapatch.controller;
 
+import bombapatch.controller.impl.db.saveUserEmSalaAction;
+import bombapatch.controller.impl.view.CallViewEntraEmSalaAction;
+import bombapatch.controller.impl.db.saveSalaAction;
+import bombapatch.controller.impl.view.CallViewCriaSalaAction;
 import bombapatch.controller.impl.db.SaveJogTimeAction;
 import bombapatch.controller.impl.view.CallViewCadJogTimeAction;
 import bombapatch.controller.impl.db.SaveTimeAction;
@@ -58,10 +62,13 @@ public class CommanderController extends HttpServlet {
         comandos.put("acessoNegado", new CallViewAcessoNegadoAction());
         comandos.put("ranking", new CallViewRankingAction());
         comandos.put("campeonato", new CallViewHomeAction());
+        comandos.put("entrarEmSala", new CallViewEntraEmSalaAction()); 
         //view de cadastros
         comandos.put("cadUser", new CallViewCadUser());
         comandos.put("cadastroTime", new CallViewCadTimeAction());
         comandos.put("cadastroJogTime", new CallViewCadJogTimeAction());
+        comandos.put("criarSala", new CallViewCriaSalaAction()); 
+        
         //ACTIONS//////////////////////////////////////////////////////////
         comandos.put("checkLogin", new CheckLoginAction());
         comandos.put("logout", new LogoutAction());
@@ -70,12 +77,10 @@ public class CommanderController extends HttpServlet {
         comandos.put("calculaRanking", new CalculaRankingAction());
         comandos.put("votacaoTimes", new VotacaoTimesAction()); 
         comandos.put("saveJogTime", new SaveJogTimeAction());
+        comandos.put("saveSala", new saveSalaAction());
+        comandos.put("saveUserEmSala", new saveUserEmSalaAction());
          
-//         //TODO
-//         //TODO
-//         //TODO
-         //TODO
-        
+
     }
     
     
@@ -102,7 +107,7 @@ public class CommanderController extends HttpServlet {
         } catch (NullPointerException ex) {
             System.out.println(ex.getCause());
             RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=erro");
-            request.setAttribute("err", "Comando não Encontrado"+ex.getMessage());
+            request.setAttribute("err", "Comando não Encontrado "+ex.getMessage());
             rd.forward(request, response);
         } catch (Exception ex) {
             System.out.println(ex.getCause());

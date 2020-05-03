@@ -7,7 +7,6 @@ package bombapatch.controller.impl.db;
 
 import bombapatch.controller.action.ICommanderAction;
 import bombapatch.controller.impl.view.CallViewConsultaRankingAction;
-import bombapatch.controller.impl.view.CallViewRankingAction;
 import bombapatch.model.dao.impl.CampeonatoDao;
 import bombapatch.model.dao.impl.CampeonatoEstatisticaDao;
 import bombapatch.model.dao.impl.PartidaDao;
@@ -20,7 +19,6 @@ import bombapatch.model.domain.Time;
 import bombapatch.model.domain.Usuario;
 import java.util.ArrayList;
 import java.util.List;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -39,22 +37,21 @@ public class CalculaRankingAction implements ICommanderAction{
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         String[] placarTime1 = request.getParameterValues("placarTime1");
-        String[] golsArTime1 = request.getParameterValues("golsArTime1");
         String[] placarTime2 = request.getParameterValues("placarTime2");
-        String[] golsArTime2 = request.getParameterValues("golsArTime2");
-        
+        String timeComArt = request.getParameter("times");
+                
         String[] nometime1 = request.getParameterValues("nometime1");
         String[] nometime2 = request.getParameterValues("nometime2");
         
         Campeonato c = new CampeonatoDao().findLast();
         ArrayList<Time> times1 = new ArrayList<>();
         ArrayList<Time> times2 = new ArrayList<>();
-        ArrayList<Partida> partidas = new ArrayList<>(); //tem Id de times e de campeonato
+        ArrayList<Partida> partidas = new ArrayList<>(); 
         
-        CampeonatoEstatistica ce = new CampeonatoEstatisticaDao().findLast();
+        CampeonatoEstatistica ce = new CampeonatoEstatisticaDao().findByCampeonato(c);
         ce.setCampeonato(c);
         new CampeonatoEstatisticaDao().alterar(ce);
-        CampeonatoEstatistica ce2 = new CampeonatoEstatisticaDao().findLast();
+        CampeonatoEstatistica ce2 = new CampeonatoEstatisticaDao().findByCampeonato(c);
                
 
         
@@ -75,16 +72,11 @@ public class CalculaRankingAction implements ICommanderAction{
             p.setTime1(a);
             p.setTime2(b);
             p.setCampeonato(c);
-            p.setGolsdeArtilheiroTime1(Integer.parseInt(golsArTime1[i]));
-            p.setGolsdeArtilheiroTime2(Integer.parseInt(golsArTime2[i]));
             p.setPontuacaoTime1(Integer.parseInt(placarTime1[i]));
             p.setPontuacaoTime2(Integer.parseInt(placarTime2[i]));
             
            partidas.add(p);
         }
-        
-    
-      
 
         //calculando pontuação total de todas as partidas
         for(Time t : times1){
@@ -93,6 +85,9 @@ public class CalculaRankingAction implements ICommanderAction{
                     t.addPartidas(p);
                 }
             }
+            if(timeComArt.equals(t.getNome())){
+                t.setTemArtilheiro(true);
+            }else  t.setTemArtilheiro(false);
            t.calculaPontuacaoTotal();
            t.setCampeonatoEstatistica(ce2);
            new TimeDao().alterar(t);
@@ -102,18 +97,30 @@ public class CalculaRankingAction implements ICommanderAction{
                 if(t.getNome().equals(p.getTime2().getNome())){
                     t.addPartidas(p);
                 }
-            }           
+            }
+            if(timeComArt.equals(t.getNome())){
+                t.setTemArtilheiro(true);
+            }else  t.setTemArtilheiro(false);
             t.calculaPontuacaoTotal();
             t.setCampeonatoEstatistica(ce2);
             new TimeDao().alterar(t);
         }
         
-        
+      //////////////////////////////////////////////////////////////////////////////////////
+//        ArrayList<Time> timxs = new ArrayList<>();
+//        
+//        for (int i = 0; i < times1.size(); i++) {
+//            
+//            
+//        }
+      ///////////////////////////////////////////////////////////////////////////////////////
+      
+        //TESTE
         for(Partida p : partidas){
             p.setCampeonato(c);
             new PartidaDao().inserir(p);
         }
-        //////////////////////////////////////////////ate aqio ta ok, acho ///////////////////////////
+
         
           List<Time> listanova = new TimeDao().findByCa(c);
        
@@ -122,14 +129,11 @@ public class CalculaRankingAction implements ICommanderAction{
        
         List<Time> ranking = ce.calculaRanking();
         
-        
-        
         for(Time t : ranking){
             t.setCampeonatoEstatistica(ce);
-        }
-        for(Time t : ranking){
             new TimeDao().alterar(t);
         }
+
         
         
         Usuario winner = new UsuarioDao().findByTeam(ranking.get(0));
@@ -138,35 +142,14 @@ public class CalculaRankingAction implements ICommanderAction{
         
         new CampeonatoEstatisticaDao().alterar(ce);
         
+
         
-        
-        //atualizando as partidas
-        ArrayList<Partida> lista = new ArrayList<>();
-        
-        for (int i = 0; i < times1.size(); i++) {
-            Time a = times1.get(i); Time b = times2.get(i);
-            Partida p = new Partida();
-            p.setTime1(a);
-            p.setTime2(b);
-            p.setCampeonato(c);
-            p.setGolsdeArtilheiroTime1(Integer.parseInt(golsArTime1[i]));
-            p.setGolsdeArtilheiroTime2(Integer.parseInt(golsArTime2[i]));
-            p.setPontuacaoTime1(Integer.parseInt(placarTime1[i]));
-            p.setPontuacaoTime2(Integer.parseInt(placarTime2[i]));
-            
-            lista.add(p);
-        }
-        
-        request.setAttribute("lista", lista);
+        request.setAttribute("lista", partidas);
         request.setAttribute("ranking", ranking);
         request.setAttribute("winner", winner);
         
-        if(lista.isEmpty() || ranking.isEmpty() || winner == null){
-            request.setAttribute("err", "Algum objeto está nulo");
-            new CallViewRankingAction().executar(request, response);
-        }else{
-            new CallViewConsultaRankingAction().executar(request, response);
-        }
+        new CallViewConsultaRankingAction().executar(request, response);
+        
         
     }
     

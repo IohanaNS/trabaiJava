@@ -7,6 +7,7 @@ package bombapatch.model.dao.impl;
 
 import bombapatch.model.dao.GenericsDAO;
 import bombapatch.model.dao.dto.UsuarioLoginDTO;
+import bombapatch.model.domain.Campeonato;
 import bombapatch.model.domain.CampeonatoEstatistica;
 import bombapatch.model.domain.Time;
 import bombapatch.model.domain.Usuario;
@@ -91,10 +92,15 @@ public class UsuarioDao extends GenericsDAO<Usuario, Integer> {
         try {
             q.setParameter("log", login);
             q.setParameter("sen", senha);
+           
             
             Usuario user = (Usuario) q.getSingleResult();
-            UsuarioLoginDTO udto = 
-                    new UsuarioLoginDTO(user.getIdUsuario(), user.getLogin(), user.isEhAdmin());
+             UsuarioLoginDTO udto = new  UsuarioLoginDTO();
+            if(user.getCampeonato()!= null)
+            udto = new UsuarioLoginDTO(user.getIdUsuario(), user.getLogin(), user.isEhAdmin(),user.getCampeonato());
+            else{
+                udto = new UsuarioLoginDTO(user.getIdUsuario(), user.getLogin(), user.isEhAdmin());
+            }
             
             return udto;
         } catch (NoResultException e) {
@@ -146,6 +152,20 @@ public class UsuarioDao extends GenericsDAO<Usuario, Integer> {
             q.setParameter("ca",ca);
 
             return (Usuario) q.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        } catch (NonUniqueResultException ex) {
+            return null;
+        }
+    }
+
+    public List<Usuario> findByCampeonato(Campeonato c) {
+        Query q = conexao.createQuery("SELECT u from Usuario u WHERE u.campeonato.idCampeonato = :c");
+        
+        try {
+            q.setParameter("c",c.getIdCampeonato());
+
+            return q.getResultList();
         } catch (NoResultException e) {
             return null;
         } catch (NonUniqueResultException ex) {
