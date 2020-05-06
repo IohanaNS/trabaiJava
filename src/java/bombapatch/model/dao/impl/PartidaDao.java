@@ -36,10 +36,9 @@ public class PartidaDao extends GenericsDAO<Partida,Integer>{
 
     @Override
     public void apagar(Integer key) throws SQLException {
-       Partida u = new Partida(key);
-
-        conexao.getTransaction().begin();
-        conexao.remove(u);
+       conexao.getTransaction().begin();
+        Partida p = conexao.getReference(Partida.class, key);
+        conexao.remove(p);
         conexao.getTransaction().commit();
     }
 

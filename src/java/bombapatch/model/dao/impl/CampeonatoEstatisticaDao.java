@@ -8,6 +8,7 @@ package bombapatch.model.dao.impl;
 import bombapatch.model.dao.GenericsDAO;
 import bombapatch.model.domain.Campeonato;
 import bombapatch.model.domain.CampeonatoEstatistica;
+import bombapatch.model.domain.JogadorTime;
 import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -38,10 +39,9 @@ public class CampeonatoEstatisticaDao extends GenericsDAO<CampeonatoEstatistica,
 
     @Override
     public void apagar(Integer key) throws SQLException {
-       CampeonatoEstatistica u = new CampeonatoEstatistica(key);
-
-        conexao.getTransaction().begin();
-        conexao.remove(u);
+       conexao.getTransaction().begin();
+        CampeonatoEstatistica p = conexao.getReference(CampeonatoEstatistica.class, key);
+        conexao.remove(p);
         conexao.getTransaction().commit();
     }
 

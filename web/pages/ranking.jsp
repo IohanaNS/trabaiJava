@@ -12,8 +12,10 @@
 
     <!--    todo-->
     <form action="home" method="post"> 
-        <div class="w3-section">
-            <table style="height: 330px;text-align: center;">
+        <div class="w3-section" style=" overflow-y:scroll; 
+height: 420px; 
+display:block;width: 100%;margin-bottom: 20px">
+            <table style="height: 400px;text-align: center;">
 
 
 
@@ -37,7 +39,7 @@
                 </tbody>
             </table>
             <label class="label">Qual time tem o artilheiro?</label>
-            <select name="times">
+            <select name="times" class="form-control col-sm-2">
             <c:forEach items="${requestScope.times}" var="p">
                 
                     <option value="${p.nome}">${p.nome}</option>

@@ -10,15 +10,17 @@
 <html lang="en">
     <title>Bombapatch</title>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
     <style>
         body,h1,h2,h3,h4,h5 {font-family: "Poppins", sans-serif;}
         body {font-size:16px;overflow-y : scroll !important;overflow-x: scroll !important;}
-        table {width: 100%;display:block;}
-        thead {display: inline-block;width: 100%;height: 10px;}
-        tbody {color: lightgray;display: inline-block;width: 100%;overflow: auto;}
+        table {width: 100%;color: #4CAF50;}
+        thead {width: 100%;color: #4CAF50;}
+        tbody {width: 100%;overflow: auto; }
         .w3-half img{margin-bottom:-6px;margin-top:16px;opacity:0.8;cursor:pointer;padding: 10px;}
         .w3-half img:hover{opacity:1}
         #teste{background-image: url(img/campo_futebol2.jpg);background-size: cover;}
@@ -33,6 +35,9 @@
         #trAltura2{height:160px}
         .livav{font-size: 15px;}
         ul{list-style-type: none;}
+        .table-hover{ color:black;}
+        .selector-for-some-widget {box-sizing: content-box;}
+        select{color: #404040 !important;font-weight: bold !important;}
     </style>
     <body>
 
@@ -90,8 +95,14 @@
                 </c:if>
 
 
-
+                    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  
                 <script>
+                    
+                    
+                    
                     // Script to open and close sidebar
                     function w3_open() {
                         document.getElementById("mySidebar").style.display = "block";
@@ -111,6 +122,7 @@
                         captionText.innerHTML = element.alt;
                     }
                 </script>
+                
 
             </div>
 

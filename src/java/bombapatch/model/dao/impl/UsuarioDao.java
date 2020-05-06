@@ -44,10 +44,9 @@ public class UsuarioDao extends GenericsDAO<Usuario, Integer> {
     @Override
     public void apagar(Integer key) throws SQLException {
 
-        Usuario u = new Usuario(key);
-
         conexao.getTransaction().begin();
-        conexao.remove(u);
+        Usuario p = conexao.getReference(Usuario.class, key);
+        conexao.remove(p);
         conexao.getTransaction().commit();
     }
 
@@ -95,7 +94,7 @@ public class UsuarioDao extends GenericsDAO<Usuario, Integer> {
            
             
             Usuario user = (Usuario) q.getSingleResult();
-             UsuarioLoginDTO udto = new  UsuarioLoginDTO();
+             UsuarioLoginDTO udto = new UsuarioLoginDTO();
             if(user.getCampeonato()!= null)
             udto = new UsuarioLoginDTO(user.getIdUsuario(), user.getLogin(), user.isEhAdmin(),user.getCampeonato());
             else{

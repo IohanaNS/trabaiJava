@@ -7,6 +7,7 @@ package bombapatch.controller.impl.db;
 
 import bombapatch.controller.action.ICommanderAction;
 import bombapatch.controller.impl.view.CallViewConsultaRankingAction;
+import bombapatch.model.dao.dto.UsuarioLoginDTO;
 import bombapatch.model.dao.impl.CampeonatoDao;
 import bombapatch.model.dao.impl.CampeonatoEstatisticaDao;
 import bombapatch.model.dao.impl.PartidaDao;
@@ -43,28 +44,23 @@ public class CalculaRankingAction implements ICommanderAction{
         String[] nometime1 = request.getParameterValues("nometime1");
         String[] nometime2 = request.getParameterValues("nometime2");
         
-        Campeonato c = new CampeonatoDao().findLast();
+        UsuarioLoginDTO us = (UsuarioLoginDTO)request.getSession().getAttribute("user");
+        
+        Campeonato c = new CampeonatoDao().findByUser(us);
+        
         ArrayList<Time> times1 = new ArrayList<>();
         ArrayList<Time> times2 = new ArrayList<>();
         ArrayList<Partida> partidas = new ArrayList<>(); 
         
         CampeonatoEstatistica ce = new CampeonatoEstatisticaDao().findByCampeonato(c);
-        ce.setCampeonato(c);
-        new CampeonatoEstatisticaDao().alterar(ce);
-        CampeonatoEstatistica ce2 = new CampeonatoEstatisticaDao().findByCampeonato(c);
-               
-
         
         //achando os times de acordo com nome
         for (int i = 0; i < nometime1.length; i++) {
             Time t = new TimeDao().findByNome(nometime1[i]);
             times1.add(t);
-        }
-        for (int i = 0; i < nometime2.length; i++) {
-            Time t = new TimeDao().findByNome(nometime2[i]);
-            times2.add(t);
-        }
-        
+             Time t2 = new TimeDao().findByNome(nometime2[i]);
+            times2.add(t2);
+        } 
        //criando as partidas
         for (int i = 0; i < times1.size(); i++) {
             Time a = times1.get(i); Time b = times2.get(i);
@@ -77,49 +73,57 @@ public class CalculaRankingAction implements ICommanderAction{
             
            partidas.add(p);
         }
-
-        //calculando pontuação total de todas as partidas
+        //colocando partidas em times
         for(Time t : times1){
             for(Partida p : partidas){
-                if(t.getNome().equals(p.getTime1().getNome())){
+                if(t.getNome().equals(p.getTime1().getNome()) || t.getNome().equals(p.getTime2().getNome())){
                     t.addPartidas(p);
                 }
             }
+        }
+        for(Time t : times2){
+            for(Partida p : partidas){
+                if(t.getNome().equals(p.getTime2().getNome())|| t.getNome().equals(p.getTime1().getNome())){
+                    t.addPartidas(p);
+                }
+            }
+        }    
+        
+        ArrayList<Time> timxs = new ArrayList<>();
+        
+        timxs.add(times1.get(0));
+        for (int i = 1; i < times1.size(); i++) { 
+            if(!times1.get(i).getNome().equals(times1.get(i-1).getNome())){
+                 timxs.add(times1.get(i));
+            }
+        }
+        int cont = 0;
+        for (int i = 0; i < times2.size(); i++) {
+            for(int j = 0; j < timxs.size(); j++){
+                if(times2.get(i).getNome().equals(timxs.get(j).getNome())){
+                    cont++;
+                }
+            }
+            if(cont == 0){
+                timxs.add(times2.get(i));
+            }
+            cont = 0;
+        }
+        for(Time t : timxs){
             if(timeComArt.equals(t.getNome())){
                 t.setTemArtilheiro(true);
             }else  t.setTemArtilheiro(false);
            t.calculaPontuacaoTotal();
-           t.setCampeonatoEstatistica(ce2);
+           t.setCampeonatoEstatistica(ce);
            new TimeDao().alterar(t);
         }
-        for(Time t : times2){
-            for(Partida p : partidas){
-                if(t.getNome().equals(p.getTime2().getNome())){
-                    t.addPartidas(p);
-                }
-            }
-            if(timeComArt.equals(t.getNome())){
-                t.setTemArtilheiro(true);
-            }else  t.setTemArtilheiro(false);
-            t.calculaPontuacaoTotal();
-            t.setCampeonatoEstatistica(ce2);
-            new TimeDao().alterar(t);
-        }
-        
-      //////////////////////////////////////////////////////////////////////////////////////
-//        ArrayList<Time> timxs = new ArrayList<>();
-//        
-//        for (int i = 0; i < times1.size(); i++) {
-//            
-//            
-//        }
       ///////////////////////////////////////////////////////////////////////////////////////
       
-        //TESTE
-        for(Partida p : partidas){
-            p.setCampeonato(c);
-            new PartidaDao().inserir(p);
-        }
+        //COMENTAR PARA TESTES
+//        for(Partida p : partidas){
+//            p.setCampeonato(c);
+//            new PartidaDao().inserir(p);
+//        }
 
         
           List<Time> listanova = new TimeDao().findByCa(c);
@@ -128,13 +132,6 @@ public class CalculaRankingAction implements ICommanderAction{
         for(Time t : listanova)ce.addTime(t);
        
         List<Time> ranking = ce.calculaRanking();
-        
-        for(Time t : ranking){
-            t.setCampeonatoEstatistica(ce);
-            new TimeDao().alterar(t);
-        }
-
-        
         
         Usuario winner = new UsuarioDao().findByTeam(ranking.get(0));
         

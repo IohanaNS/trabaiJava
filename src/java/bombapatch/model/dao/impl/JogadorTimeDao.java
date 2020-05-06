@@ -38,10 +38,9 @@ public class JogadorTimeDao extends GenericsDAO<JogadorTime,Integer>{
 
     @Override
     public void apagar(Integer key) throws SQLException {
-       JogadorTime u = new JogadorTime(key);
-
-        conexao.getTransaction().begin();
-        conexao.remove(u);
+       conexao.getTransaction().begin();
+        JogadorTime p = conexao.getReference(JogadorTime.class, key);
+        conexao.remove(p);
         conexao.getTransaction().commit();
     }
 

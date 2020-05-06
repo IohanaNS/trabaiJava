@@ -92,9 +92,6 @@ public class CampeonatoEstatistica implements Serializable {
                 }
             
             }
-           
-            
-
         return lista2;
     }
     

@@ -8,7 +8,6 @@ package bombapatch.model.dao.impl;
 import bombapatch.model.dao.GenericsDAO;
 import bombapatch.model.dao.dto.UsuarioLoginDTO;
 import bombapatch.model.domain.Campeonato;
-import bombapatch.model.domain.Usuario;
 import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -39,10 +38,9 @@ public class CampeonatoDao extends GenericsDAO<Campeonato,Integer>{
 
     @Override
     public void apagar(Integer key) throws SQLException {
-       Campeonato u = new Campeonato(key);
-
-        conexao.getTransaction().begin();
-        conexao.remove(u);
+       conexao.getTransaction().begin();
+        Campeonato p = conexao.getReference(Campeonato.class, key);
+        conexao.remove(p);
         conexao.getTransaction().commit();
     }
 

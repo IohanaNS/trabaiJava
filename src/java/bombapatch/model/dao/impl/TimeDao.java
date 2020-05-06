@@ -39,10 +39,9 @@ public class TimeDao extends GenericsDAO<Time,Integer>{
 
     @Override
     public void apagar(Integer key) throws SQLException {
-       Time u = new Time(key);
-
-        conexao.getTransaction().begin();
-        conexao.remove(u);
+       conexao.getTransaction().begin();
+        Time p = conexao.getReference(Time.class, key);
+        conexao.remove(p);
         conexao.getTransaction().commit();
     }
 

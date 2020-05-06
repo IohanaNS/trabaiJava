@@ -10,9 +10,11 @@ import bombapatch.controller.impl.view.CallViewEntraEmSalaAction;
 import bombapatch.controller.impl.view.CallViewHomeAction;
 import bombapatch.model.dao.dto.UsuarioLoginDTO;
 import bombapatch.model.dao.impl.CampeonatoDao;
+import bombapatch.model.dao.impl.CampeonatoEstatisticaDao;
 import bombapatch.model.dao.impl.TimeDao;
 import bombapatch.model.dao.impl.UsuarioDao;
 import bombapatch.model.domain.Campeonato;
+import bombapatch.model.domain.CampeonatoEstatistica;
 import bombapatch.model.domain.Time;
 import bombapatch.model.domain.Usuario;
 import javax.servlet.http.HttpServletRequest;
@@ -39,14 +41,15 @@ public class saveUserEmSalaAction implements ICommanderAction {
         Campeonato c = new Campeonato(request.getParameter("escolhaSala"));
 
         Campeonato ca = new CampeonatoDao().findByNomeSala(c.getSala());
-
+        CampeonatoEstatistica ce = new CampeonatoEstatisticaDao().findByCampeonato(ca);
         u.setCampeonato(ca);
 
         Time t = new TimeDao().findByNome(request.getParameter("escolhaTime"));
-
+        t.setCampeonatoEstatistica(ce);
         if (t.getUsuario() == null) {
             u.setTime(t);
             new UsuarioDao().alterar(u);
+            new TimeDao().alterar(t);
             request.setAttribute("succ", "Sucesso! Agora você faz parte da sala " + ca.getSala());
             new CallViewHomeAction().executar(request, response);
         } else {

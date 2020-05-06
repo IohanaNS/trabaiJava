@@ -30,10 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Partida.findAll", query = "SELECT p FROM Partida p")
-    , @NamedQuery(name = "Partida.findByIdPartida", query = "SELECT p FROM Partida p WHERE p.idPartida = :idPartida")
-
-    , @NamedQuery(name = "Partida.findByPlacarTime1", query = "SELECT p FROM Partida p WHERE p.golsdeArtilheiroTime1 = :golsdeArtilheiroTime1")
-    , @NamedQuery(name = "Partida.findByPlacarTime2", query = "SELECT p FROM Partida p WHERE p.golsdeArtilheiroTime2 = :golsdeArtilheiroTime2")})
+    , @NamedQuery(name = "Partida.findByIdPartida", query = "SELECT p FROM Partida p WHERE p.idPartida = :idPartida")})
 
 public class Partida implements Serializable {
 
@@ -43,11 +40,6 @@ public class Partida implements Serializable {
     @Basic(optional = false)
     @Column(name = "idPartida", nullable = false)
     private Integer idPartida;
-
-    @Column(name = "golsdeArtilheiroTime1")
-    private int golsdeArtilheiroTime1;
-    @Column(name = "golsdeArtilheiroTime2")
-    private int golsdeArtilheiroTime2;
 
     @Column(name = "pontuacaoTime1")
     private Integer ptoTime1;
@@ -76,22 +68,6 @@ public class Partida implements Serializable {
 
     public void setIdPartida(Integer idPartida) {
         this.idPartida = idPartida;
-    }
-
-    public int getGolsdeArtilheiroTime1() {
-        return golsdeArtilheiroTime1;
-    }
-
-    public void setGolsdeArtilheiroTime1(int golsdeArtilheiroTime1) {
-        this.golsdeArtilheiroTime1 = golsdeArtilheiroTime1;
-    }
-
-    public int getGolsdeArtilheiroTime2() {
-        return golsdeArtilheiroTime2;
-    }
-
-    public void setGolsdeArtilheiroTime2(int golsdeArtilheiroTime2) {
-        this.golsdeArtilheiroTime2 = golsdeArtilheiroTime2;
     }
 
     public Integer getPontuacaoTime1() {

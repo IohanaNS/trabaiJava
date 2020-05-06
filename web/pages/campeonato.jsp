@@ -25,17 +25,25 @@
         <form action="home" method="post"> 
             <input type="hidden" name="ac" value="votacaoTimes"/>
 
-            <div class="w3-section" style="height: 265px !important;">
-                <fieldset style="text-align: center;width: 30%; ">
-                    <tr>
-                        <c:if test="${requestScope.users != null}">
-                            <c:forEach items="${requestScope.users}" var="p"> 
-                                <td value="${p.login}"><span class="label">${p.login} | time -> ${p.time.nome}</span></td><BR>
-                                </c:forEach>
-                            </c:if>
-
-                    </tr>
-                </fieldset>
+            <div class="w3-section" >
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col">Usuário</th>
+                            <th scope="col">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:if test="${requestScope.users != null}">                   
+                                <c:forEach items="${requestScope.users}" var="p"> 
+                                    <tr>
+                                    <td value="${p.login}"><span class="label">${p.login}</span></td>
+                                    <td value="${p.time.nome}"><span class="label">${p.time.nome}</span></td>
+                                    </tr>
+                                    </c:forEach>
+                        </tbody>
+                    </c:if>
+                </table>
             </div>
 
             <c:if test="${sessionScope.user.ehAdmin}">
@@ -59,14 +67,14 @@
             </c:if>
         </form>
         <c:if test="${sessionScope.user.ehAdmin == false && sessionScope.user.campeonato == null}">
-                <form action="home?ac=entrarEmSala" method="post">
-                    <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Entre em uma sala</button>
-                </form>    
+            <form action="home?ac=entrarEmSala" method="post">
+                <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Entre em uma sala</button>
+            </form>    
         </c:if>
         <c:if test="${sessionScope.user.ehAdmin == false && sessionScope.user.campeonato != null}">
-                <form action="home?ac=entrarEmSala" method="post">
-                    <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Entre em uma outra sala</button>
-                </form>    
+            <form action="home?ac=entrarEmSala" method="post">
+                <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Entre em uma outra sala</button>
+            </form>    
         </c:if>
         <c:if test="${sessionScope.user.campeonato != null && count == false && sessionScope.user.ehAdmin ==false}">
             <h3 class="w3-xlarge w3-text-green">Volte mais tarde para checar os resultados!</h3>

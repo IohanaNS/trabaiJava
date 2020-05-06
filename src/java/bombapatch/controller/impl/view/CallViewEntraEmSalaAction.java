@@ -35,18 +35,15 @@ public class CallViewEntraEmSalaAction implements ICommanderAction {
         
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=entrarSala");
         
-        List<String> listax = new CampeonatoDao().findBySalas();
-        List<String> lista = new ArrayList<>();
-        
-        
-        
+        List<String> lista = new CampeonatoDao().findBySalas();
+
         List<Time> times = new TimeDao().buscarTodos(); 
        
             
         
        
         request.setAttribute("times", times);
-        request.setAttribute("lista",listax);
+        request.setAttribute("lista",lista);
         
         rd.forward(request, response);
     }

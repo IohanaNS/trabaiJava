@@ -39,7 +39,7 @@ public class VotacaoTimesAction implements ICommanderAction {
 
         UsuarioLoginDTO userLog = (UsuarioLoginDTO) request.getSession().getAttribute("user");
         Campeonato camp = new CampeonatoDao().findByUser(userLog);
-        List<Usuario> users = new UsuarioDao().findByCampeonato(camp);
+       
 
         List<Time> times = new TimeDao().findByCa(camp);
 

@@ -6,8 +6,13 @@
 package bombapatch.controller.impl.view;
 
 import bombapatch.controller.action.ICommanderAction;
+import bombapatch.model.dao.dto.UsuarioLoginDTO;
+import bombapatch.model.dao.impl.CampeonatoDao;
 import bombapatch.model.dao.impl.TimeDao;
+import bombapatch.model.dao.impl.UsuarioDao;
+import bombapatch.model.domain.Campeonato;
 import bombapatch.model.domain.Time;
+import bombapatch.model.domain.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.RequestDispatcher;
@@ -29,14 +34,35 @@ public class CallViewCriaSalaAction implements ICommanderAction {
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
         
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=criaSala");
+        
+        UsuarioLoginDTO us = (UsuarioLoginDTO) request.getSession().getAttribute("user");
+        
+        
+        //TESTE
+        if(us.getCampeonato() != null){
+            Campeonato ca = new CampeonatoDao().findByUser(us);
+            List<Usuario> users = new UsuarioDao().findByCampeonato(ca);
+            for(Usuario t : users){
+                t.setTime(null);
+                new UsuarioDao().alterar(t);
+            }
+            
+            List<Time> times = new TimeDao().buscarTodos();
+            request.setAttribute("times", times);
+        
+            rd.forward(request, response);
+        }else{
+            List<Time> times = new TimeDao().buscarTodos();
+            request.setAttribute("times", times);
+        
+            rd.forward(request, response);
+        }
+        
+        
        
         
-        List<Time> times = new TimeDao().buscarTodos(); 
         
-            
-        request.setAttribute("times", times);
         
-        rd.forward(request, response);
     }
     
 }
