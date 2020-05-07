@@ -54,6 +54,8 @@ public class Campeonato implements Serializable {
 
     public Campeonato() {
         this.usuarios = new ArrayList<>();
+        
+        
     }
     public Campeonato(String sala) {
     this.sala = sala;

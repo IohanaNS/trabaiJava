@@ -8,6 +8,7 @@ package bombapatch.model.dao.impl;
 import bombapatch.model.dao.GenericsDAO;
 import bombapatch.model.dao.dto.UsuarioLoginDTO;
 import bombapatch.model.domain.Campeonato;
+import bombapatch.model.domain.Usuario;
 import java.sql.SQLException;
 import java.util.List;
 import javax.persistence.NoResultException;
@@ -79,7 +80,7 @@ public class CampeonatoDao extends GenericsDAO<Campeonato,Integer>{
         }
     }
 
-    public Campeonato findByUser(UsuarioLoginDTO u) {
+    public Campeonato findByUser(Usuario u) {
         Query q = conexao.createQuery("SELECT u FROM Campeonato u WHERE u.idCampeonato = :idCampeonato");
 
         try {

@@ -39,7 +39,7 @@ public class CallViewHomeAction implements ICommanderAction{
         Usuario u = new UsuarioDao().findByLogin(userLog.getLogin());
         
         if(u.getCampeonato() != null){
-            Campeonato c = new CampeonatoDao().findByUser(userLog);
+            Campeonato c = new CampeonatoDao().findByUser(u);
             List<Usuario> users = new UsuarioDao().findByCampeonato(c);
              boolean count = true;
              

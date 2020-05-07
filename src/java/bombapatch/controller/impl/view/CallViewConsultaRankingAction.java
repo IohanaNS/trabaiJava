@@ -27,7 +27,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author iohan
  */
-public class CallViewConsultaRankingAction implements ICommanderAction{
+public class CallViewConsultaRankingAction implements ICommanderAction {
 
     @Override
     public boolean ehLiberado() {
@@ -36,37 +36,34 @@ public class CallViewConsultaRankingAction implements ICommanderAction{
 
     @Override
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        
+
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=consultaRanking");
-        
-        
-        if(request.getAttribute("lista")!= null && request.getAttribute("ranking") != null 
-                && request.getAttribute("winner") != null && request.getAttribute("times") != null){
+        UsuarioLoginDTO userLog = (UsuarioLoginDTO) request.getSession().getAttribute("user");
+
+        if (request.getAttribute("lista") != null && request.getAttribute("ranking") != null
+                && request.getAttribute("winner") != null) {
             rd.forward(request, response);
-        }else{
-            UsuarioLoginDTO userLog = (UsuarioLoginDTO)request.getSession().getAttribute("user");
-        
+        } else {
+
             Usuario u = new UsuarioDao().findByLogin(userLog.getLogin());
 
-            Campeonato ca = new CampeonatoDao().findByUser(userLog);
-            
+            Campeonato ca = new CampeonatoDao().findByUser(u);
+
             List<Partida> lista = new PartidaDao().findByCampeonato(ca);
             List<Time> times = new TimeDao().findByCa(ca);
             CampeonatoEstatistica ce = new CampeonatoEstatisticaDao().findByCampeonato(ca);
             times.forEach((t) -> ce.addTime(t));
             List<Time> ranking = ce.calculaRanking();
             Usuario winner = new UsuarioDao().findByCa(ca);
-            
+
             request.setAttribute("lista", lista);
             request.setAttribute("ranking", ranking);
             request.setAttribute("winner", winner);
-            
+
             rd.forward(request, response);
 
         }
-        
-        
-        
+
     }
-    
+
 }

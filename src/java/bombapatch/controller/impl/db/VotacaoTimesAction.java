@@ -38,13 +38,14 @@ public class VotacaoTimesAction implements ICommanderAction {
     public void executar(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
         UsuarioLoginDTO userLog = (UsuarioLoginDTO) request.getSession().getAttribute("user");
-        Campeonato camp = new CampeonatoDao().findByUser(userLog);
+        Usuario u = new UsuarioDao().findByLogin(userLog.getLogin());
+        Campeonato camp = new CampeonatoDao().findByUser(u);
        
 
         List<Time> times = new TimeDao().findByCa(camp);
 
         Partida p = new Partida();
-        ArrayList<Partida> partidas = p.ordenaPartidas(times);
+        ArrayList<Partida> partidas = p.ordenaPartidas(times); //retorna uma lista de partidas
 
         request.setAttribute("times", times);
         request.setAttribute("partidas", partidas);

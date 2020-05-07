@@ -30,7 +30,8 @@ import javax.servlet.http.HttpServletResponse;
 public class CalculaRankingAction implements ICommanderAction{
 
     @Override
-    public boolean ehLiberado() {
+    public boolean ehLiberado() {    //// t1 x t1 
+                                     //// t1 x t3
         return false;
     }
 
@@ -45,8 +46,8 @@ public class CalculaRankingAction implements ICommanderAction{
         String[] nometime2 = request.getParameterValues("nometime2");
         
         UsuarioLoginDTO us = (UsuarioLoginDTO)request.getSession().getAttribute("user");
-        
-        Campeonato c = new CampeonatoDao().findByUser(us);
+        Usuario u = new UsuarioDao().findByLogin(us.getLogin());
+        Campeonato c = new CampeonatoDao().findByUser(u);
         
         ArrayList<Time> times1 = new ArrayList<>();
         ArrayList<Time> times2 = new ArrayList<>();
@@ -58,9 +59,10 @@ public class CalculaRankingAction implements ICommanderAction{
         for (int i = 0; i < nometime1.length; i++) {
             Time t = new TimeDao().findByNome(nometime1[i]);
             times1.add(t);
-             Time t2 = new TimeDao().findByNome(nometime2[i]);
-            times2.add(t2);
+            Time t2 = new TimeDao().findByNome(nometime2[i]);
+             times2.add(t2);       
         } 
+
        //criando as partidas
         for (int i = 0; i < times1.size(); i++) {
             Time a = times1.get(i); Time b = times2.get(i);
@@ -96,7 +98,7 @@ public class CalculaRankingAction implements ICommanderAction{
             if(!times1.get(i).getNome().equals(times1.get(i-1).getNome())){
                  timxs.add(times1.get(i));
             }
-        }
+        } //nome do time 1 != nome do time -1
         int cont = 0;
         for (int i = 0; i < times2.size(); i++) {
             for(int j = 0; j < timxs.size(); j++){
@@ -117,13 +119,13 @@ public class CalculaRankingAction implements ICommanderAction{
            t.setCampeonatoEstatistica(ce);
            new TimeDao().alterar(t);
         }
-      ///////////////////////////////////////////////////////////////////////////////////////
+     
       
-        //COMENTAR PARA TESTES
-//        for(Partida p : partidas){
-//            p.setCampeonato(c);
-//            new PartidaDao().inserir(p);
-//        }
+        //COMENTAR PARA TESTES PARA NÃO FICAR SALVANDO PARTIDAS DESNECESSARIAMENTE
+        for(Partida p : partidas){
+            p.setCampeonato(c);
+            new PartidaDao().inserir(p);
+        }
 
         
           List<Time> listanova = new TimeDao().findByCa(c);

@@ -36,15 +36,17 @@ public class CallViewCriaSalaAction implements ICommanderAction {
         RequestDispatcher rd = request.getRequestDispatcher("index.jsp?page=criaSala");
         
         UsuarioLoginDTO us = (UsuarioLoginDTO) request.getSession().getAttribute("user");
+        Usuario u = new UsuarioDao().findByLogin(us.getLogin());
         
-        
-        //TESTE
+
         if(us.getCampeonato() != null){
-            Campeonato ca = new CampeonatoDao().findByUser(us);
+            Campeonato ca = new CampeonatoDao().findByUser(u);
             List<Usuario> users = new UsuarioDao().findByCampeonato(ca);
             for(Usuario t : users){
                 t.setTime(null);
+                //t.getTime().setPontuacaoTotal(0.0);
                 new UsuarioDao().alterar(t);
+           //     new TimeDao().alterar(t.getTime());
             }
             
             List<Time> times = new TimeDao().buscarTodos();

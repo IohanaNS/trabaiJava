@@ -50,13 +50,17 @@
                 </div>
                 <div class="w3-bar-block">
                     <a href="home?ac=campeonato" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Campeonato</a>  
+                     
                     <a href="home?ac=consultaRanking" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Ranking</a>
+                    
                     <c:if test="${sessionScope.user.ehAdmin}">
                         <ul class="w3-bar-item "><li>Área do administrador</li>
                             <li>
                                 <a class=" w3-bar-item w3-button w3-hover-white livav" href="home?ac=cadastroTime" onclick="w3_close()">Cadastro de times</a></li>
                             <li>
                                 <a class=" w3-bar-item w3-button w3-hover-white livav" href="home?ac=cadastroJogTime" onclick="w3_close()">Cadastro de Jogadores de times</a></li>
+                             <li>
+                                <a class=" w3-bar-item w3-button w3-hover-white livav" href="home?ac=criarSala" onclick="w3_close()">Novo campeonato</a></li>
                         </ul>
                     </c:if>
                     <a href="home?ac=logout" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white">Sair</a>

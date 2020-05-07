@@ -16,7 +16,8 @@ display:block;width: 100%;margin-bottom: 20px">
         <div style=" overflow-y:scroll; 
 height:200px; 
 display:block; margin-bottom: 20px;">
-            <table class="table table-bordered">
+            <c:if test="${count != false}">
+                <table class="table table-bordered">
                     <thead>
                         <tr>
                             <th scope="col">Time</th>
@@ -73,9 +74,13 @@ display:block;width: 70%;margin-bottom: 20px">
             <h2 style="font-weight: bold;font-size: 20px;"class=" w3-text-green">Time: <span style="color:lightgray;">${requestScope.winner.time.nome}</span></h2> 
             
        
+            </c:if>
+            
+            <c:if test="${sessionScope.user.ehAdmin}">
         <button type="submit" class="w3-button w3-block w3-padding-large w3-green w3-margin-bottom">Novo campeonato?</button>
-
     </form>
+            </c:if>
+
             </div>
 </div>
 
